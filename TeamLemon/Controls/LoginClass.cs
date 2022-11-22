@@ -32,6 +32,15 @@ namespace TeamLemon.Controls
 
             MenuClass.Menu(current);
             }
+
+
+        /// <summary>
+        /// Method to check if the user exists
+        /// </summary>
+        /// <param name="allUsers"></param>
+        /// <param name="username"></param>
+        /// <param name="password"></param>
+        /// <returns>Returns either the current user if it exists, else returns null</returns>
         private static Person LoginValidation(Dictionary<int,Person> allUsers,string username, string password)
         {
             bool found = false;
