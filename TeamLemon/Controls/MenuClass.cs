@@ -8,7 +8,7 @@ namespace TeamLemon.Controls
     {
         public static void Menu(Person currentUser)
         {
-
+            Console.WriteLine($"Welcome {currentUser.Name}");
         }
     }
 }

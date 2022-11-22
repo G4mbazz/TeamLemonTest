@@ -11,7 +11,7 @@ namespace TeamLemon.Controls
         public static void Login(Dictionary<int, Person> allUsers)
         {
             bool ok = false;
-
+            var current = new Person();
             do
             {
                 Console.WriteLine("Welcome the bank\n");
@@ -19,8 +19,8 @@ namespace TeamLemon.Controls
                 var username = Console.ReadLine();
                 Console.Write("\nPassword:");
                 var password = Console.ReadLine();
-
-                if (LoginValidation(allUsers, username, password) != null)
+                current = LoginValidation(allUsers, username, password);
+                if (current != null && current.LoginAttempts != 0)
                 {
                     ok = true;
                 }
@@ -29,6 +29,8 @@ namespace TeamLemon.Controls
                     continue;
                 }
             } while (ok == false);
+
+            MenuClass.Menu(current);
             }
         private static Person LoginValidation(Dictionary<int,Person> allUsers,string username, string password)
         {
@@ -45,7 +47,6 @@ namespace TeamLemon.Controls
             }
             if(found == true && current.LoginAttempts != 0)
             {
-                Console.WriteLine("FOUND");
                 return current;
             }
             else
