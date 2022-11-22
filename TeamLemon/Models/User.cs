@@ -16,7 +16,9 @@ namespace TeamLemon.Models
                 Password = "LandFall",
                 IsAdmin = false,
                 ID = 1001,
-                LogInAttempt = 3
+                LogInAttempt = 3,
+                LockedUser = false
+                
             };
             User Patrik = new User()
             {
@@ -24,7 +26,8 @@ namespace TeamLemon.Models
                 Password = "Horror",
                 IsAdmin = false,
                 ID = 1002,
-                LogInAttempt = 3
+                LogInAttempt = 3,
+                LockedUser = false
             };
             User Leo = new User()
             {
@@ -32,7 +35,8 @@ namespace TeamLemon.Models
                 Password = "MTG",
                 IsAdmin = false,
                 ID = 1003,
-                LogInAttempt = 3
+                LogInAttempt = 3,
+                LockedUser = false
             };
             User Theo = new User()
             {
@@ -40,7 +44,8 @@ namespace TeamLemon.Models
                 Password = "CarLover",
                 IsAdmin = false,
                 ID = 1004,
-                LogInAttempt = 3
+                LogInAttempt = 3,
+                LockedUser = false
             };
             Admin Anas = new Admin()
             {
@@ -48,6 +53,7 @@ namespace TeamLemon.Models
                 Password = "coolshirt",
                 IsAdmin = true,
                 ID = 1005,
+                LockedUser = false
             };
             Dictionary<int, Person> AllPersons = new Dictionary<int, Person>();
             AllPersons.Add(Sebastian.ID, Sebastian);

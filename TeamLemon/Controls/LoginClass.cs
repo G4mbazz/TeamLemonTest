@@ -31,6 +31,11 @@ namespace TeamLemon.Controls
                 Console.Write("\nPassword: ");
                 var password = Console.ReadLine();
                 current = LoginValidation(allUsers, username, password);
+                if(current != null && current.LockedUser == true)
+                {
+                    Console.WriteLine("The user is locked");
+                    continue;
+                }
                 if (current != null && current.IsAdmin == true)
                 {
                     currentAdmin = current;
@@ -46,7 +51,6 @@ namespace TeamLemon.Controls
                     continue;
                 }
             } while (ok == false);
-
             if(current.IsAdmin == true)
             {
                 menus.AdminMenu(currentAdmin);
@@ -77,17 +81,19 @@ namespace TeamLemon.Controls
                     current = item.Value;
                     break;
                 }
-                else if (item.Value.Name == username && item.Value.Password != password)
+                else if (item.Value.Name != username ^ item.Value.Password != password)
                 {
+                    current = item.Value;
                     item.Value.LogInAttempt--;
-                }
-                else if (item.Value.Name != username && item.Value.Password == password)
-                {
-                    item.Value.LogInAttempt--;
-                }
+                }             
             }
             if (found == true && current.LogInAttempt != 0 || found == true && current.IsAdmin == true)
             {
+                return current;
+            }
+            else if (current.LogInAttempt <= 0)
+            {
+                current.LockedUser = true;
                 return current;
             }
             else
