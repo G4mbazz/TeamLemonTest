@@ -21,6 +21,8 @@ namespace TeamLemon.Controls
             var menus = new MenuClass();
             bool ok = false;
             var current = new Person();
+            Person currentUser = new User();
+            Person currentAdmin = new Admin();
             do
             {
                 Console.WriteLine("Welcome the bank\n");
@@ -29,8 +31,14 @@ namespace TeamLemon.Controls
                 Console.Write("\nPassword: ");
                 var password = Console.ReadLine();
                 current = LoginValidation(allUsers, username, password);
-                if (current != null && current.LogInAttempt != 0)
+                if (current != null && current.IsAdmin == true)
                 {
+                    currentAdmin = current;
+                    ok = true;
+                }
+                else if (current != null && current.LogInAttempt != 0 && current.IsAdmin == false)
+                {
+                    currentUser = current;
                     ok = true;
                 }
                 else
@@ -39,15 +47,14 @@ namespace TeamLemon.Controls
                 }
             } while (ok == false);
 
-            if (current.IsAdmin == true)
+            if(current.IsAdmin == true)
             {
-                menus.AdminMenu(current);
+                menus.AdminMenu(currentAdmin);
             }
             else
             {
-                menus.UserMenu(current);
+                menus.UserMenu(currentUser);
             }
-
         }
 
 
@@ -61,7 +68,7 @@ namespace TeamLemon.Controls
         private static Person LoginValidation(Dictionary<int, Person> allUsers, string username, string password)
         {
             bool found = false;
-            Person current = new Person();
+            var current = new Person();
             foreach (var item in allUsers)
             {
                 if (item.Value.Name == username && item.Value.Password == password)
@@ -79,7 +86,7 @@ namespace TeamLemon.Controls
                     item.Value.LogInAttempt--;
                 }
             }
-            if (found == true && current.LogInAttempt != 0)
+            if (found == true && current.LogInAttempt != 0 || found == true && current.IsAdmin == true)
             {
                 return current;
             }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using TeamLemon.Models;
 
 namespace TeamLemon.Controls
 {
@@ -9,6 +10,7 @@ namespace TeamLemon.Controls
         public void AdminMenu(Person admin)
         {
             // Add Admin methods to create users.
+            Console.WriteLine("I AM ADMIN");
         }
         public void UserMenu(Person currentUser)
         {
