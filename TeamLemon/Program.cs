@@ -7,9 +7,9 @@ namespace TeamLemon
     {
         static void Main(string[] args)
         {
-            var dic = Admin.AllUsers();
+            var dict = User.AllUsers();
 
-            LoginClass.Login(dic);
+            LoginClass.Login(dict);
         }
     }
 }
