@@ -6,7 +6,7 @@ namespace TeamLemon.Models
 {
     public class Admin : Person
     {
-        public static Dictionary<int, Person> allUsers()
+        public static Dictionary<int, Person> AllUsers()
         {
             Person Sebastian = new Person()
             {
