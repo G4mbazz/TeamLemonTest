@@ -11,10 +11,12 @@ namespace TeamLemon
         private bool _admin;
         private int _id;
         private int _logInAttempt;
+        private bool _lockedUser;
         public string Name { get => _name; set { _name = value; } }
         public string Password { get => _password; set { _password = value; } }
         public bool IsAdmin { get => _admin; set { _admin = value; } }
         public int ID { get => _id; set { _id = value; } }
         public int LogInAttempt { get => _logInAttempt; set { _logInAttempt = value; } }
+        public bool LockedUser { get => _lockedUser; set { _lockedUser = value; } }
     }
 }
