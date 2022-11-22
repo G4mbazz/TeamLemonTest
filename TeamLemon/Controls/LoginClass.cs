@@ -72,14 +72,14 @@ namespace TeamLemon.Controls
                 }
                 else if (item.Value.Name == username && item.Value.Password != password)
                 {
-                    item.Value.LoginAttempts--;
+                    item.Value.LogInAttempt--;
                 }
                 else if (item.Value.Name != username && item.Value.Password == password)
                 {
-                    item.Value.LoginAttempts--;
+                    item.Value.LogInAttempt--;
                 }
             }
-            if (found == true && current.LoginAttempts != 0)
+            if (found == true && current.LogInAttempt != 0)
             {
                 return current;
             }
