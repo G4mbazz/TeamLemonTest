@@ -15,12 +15,12 @@ namespace TeamLemon.Controls
             do
             {
                 Console.WriteLine("Welcome the bank\n");
-                Console.Write("Username:");
+                Console.Write("Username: ");
                 var username = Console.ReadLine();
-                Console.Write("\nPassword:");
+                Console.Write("\nPassword: ");
                 var password = Console.ReadLine();
                 current = LoginValidation(allUsers, username, password);
-                if (current != null && current.LoginAttempts != 0)
+                if (current != null && current.LogInAttempt != 0)
                 {
                     ok = true;
                 }
@@ -45,7 +45,7 @@ namespace TeamLemon.Controls
                     break;
                 }
             }
-            if(found == true && current.LoginAttempts != 0)
+            if(found == true && current.LogInAttempt != 0)
             {
                 return current;
             }

@@ -13,35 +13,39 @@ namespace TeamLemon.Models
                 Name = "Sebastian",
                 Password = "LandFall",
                 IsAdmin = false,
-                ID = 1001
+                ID = 1001,
+                LogInAttempt = 3
             };
             Person Patrik = new Person()
             {
                 Name = "Patrik",
                 Password = "Horror",
                 IsAdmin = false,
-                ID = 1002
+                ID = 1002,
+                LogInAttempt = 3
             };
             Person Leo = new Person()
             {
                 Name = "Leo",
                 Password = "MTG",
                 IsAdmin = false,
-                ID = 1003
+                ID = 1003,
+                LogInAttempt = 3
             };
             Person Theo = new Person()
             {
                 Name = "Theo",
                 Password = "CarLover",
                 IsAdmin = false,
-                ID = 1004
+                ID = 1004,
+                LogInAttempt = 3
             };
             Person Anas = new Person()
             {
                 Name = "Anas",
                 Password = "coolshirt",
                 IsAdmin = true,
-                ID = 1005
+                ID = 1005,
             };
             Dictionary<int, Person> AllPersons = new Dictionary<int, Person>();
             AllPersons.Add(Sebastian.ID, Sebastian);
