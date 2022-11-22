@@ -11,7 +11,7 @@ namespace TeamLemon.Controls
         public void Login(Dictionary<int,Person> allUsers)
         {
             bool found = false;
-            int current;
+            Person current;
             Console.WriteLine("Welcome the bank\n");
             Console.Write("Username:");
             var username = Console.ReadLine();
@@ -20,17 +20,21 @@ namespace TeamLemon.Controls
 
             foreach (var item in allUsers)
             {
-                if(item.Value.Name == username && item.Value.Password == password)
+                if(item.Value.LoginAttempts != 0)
                 {
-                    found = true;
-                    current = item.Key;
-                }
-                else
-                {
-                    Console.WriteLine("Wrong username or password");
+                    if (item.Value.Name == username && item.Value.Password == password)
+                    {
+                        found = true;
+                        current = item.Value;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Wrong username or password");
+                        item.Value.LoginAttempts--;
+                    }
                 }
             }
-
+            
         }
     }
 }
