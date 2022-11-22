@@ -10,7 +10,7 @@ namespace TeamLemon
         private string _password;
         private bool _admin;
         private int _id;
-
+        public int LoginAttempts = 3;
         public string Name { get => _name; set { _name = value; } }
         public string Password { get => _password; set { _password = value; } }
         public bool IsAdmin { get => _admin; set { _admin = value; } }
