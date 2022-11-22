@@ -6,6 +6,6 @@ namespace TeamLemon.Models
 {
     public class User : Person
     {
-
+        
     }
 }
