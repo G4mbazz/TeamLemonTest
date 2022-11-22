@@ -15,5 +15,6 @@ namespace TeamLemon
         public string Password { get => _password; set { _password = value; } }
         public bool IsAdmin { get => _admin; set { _admin = value; } }
         public int ID { get => _id; set { _id = value; } }
+
     }
 }
