@@ -29,6 +29,7 @@ namespace TeamLemon.Models
             var allUsers = User.AllUsers();
             string _username = null;
             string _password = null;
+
             int _id;
 
             // Get unique username
@@ -99,7 +100,7 @@ namespace TeamLemon.Models
             _id = 1001 + User.AllUsers().Count;
 
             // Create a person of user
-            Person person = new User()
+            User newUser = new User()
             {
                 Name = _username,
                 Password = _password,
@@ -110,7 +111,7 @@ namespace TeamLemon.Models
             };
 
             // Append to AllUsers
-            User.AllUsers().Add(_id, person);
+            User.AllUsers().Add(_id, newUser);
 
         }
     }

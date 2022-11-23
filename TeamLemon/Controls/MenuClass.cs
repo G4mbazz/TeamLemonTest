@@ -11,6 +11,7 @@ namespace TeamLemon.Controls
         {
             // Add Admin methods to create users.
             Console.WriteLine("I AM ADMIN");
+            admin.CreateNewUser();
             
         }
         public void UserMenu(User currentUser)
