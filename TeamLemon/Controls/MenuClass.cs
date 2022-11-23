@@ -7,12 +7,13 @@ namespace TeamLemon.Controls
 {
     class MenuClass
     {
-        public void AdminMenu(Person admin)
+        public void AdminMenu(Admin admin)
         {
             // Add Admin methods to create users.
             Console.WriteLine("I AM ADMIN");
+            
         }
-        public void UserMenu(Person currentUser)
+        public void UserMenu(User currentUser)
         {
             Console.WriteLine($"Welcome {currentUser.Name}");
         }

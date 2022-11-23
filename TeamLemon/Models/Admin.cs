@@ -10,15 +10,18 @@ namespace TeamLemon.Models
         
         public static Dictionary<int, Admin> AllAdmins()
         {
-            new Admin()
+            Admin anas = new Admin()
             {
-                Name = "Admin",
-                Password = "123123",
+                Name = "Anas",
+                Password = "coolshirt",
                 ID = 1005,
-                IsAdmin = true
+                IsAdmin = true,
+                LockedUser = false
             };
 
-            return AllAdmins();
+            Dictionary<int, Admin> allAdmins = new Dictionary<int, Admin>();
+            allAdmins.Add(anas.ID,anas);
+            return allAdmins;
         }
 
         public void CreateNewUser()
