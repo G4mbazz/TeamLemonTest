@@ -11,56 +11,6 @@ namespace TeamLemon.Controls
     /// </summary>
     class LoginClass
     {
-        /// <summary>
-        /// Core login method, Checks for username and password
-        /// also checks if the logged in user is an admin or not.
-        /// </summary>
-        /// <param name="allUsers"></param>
-        public static void Login(Dictionary<int, Person> allUsers)
-        {
-            var menus = new MenuClass();
-            bool ok = false;
-            var current = new Person();
-            Person currentUser = new User();
-            Person currentAdmin = new Admin();
-            do
-            {
-                Console.WriteLine("Welcome the bank\n");
-                Console.Write("Username: ");
-                var username = Console.ReadLine();
-                Console.Write("\nPassword: ");
-                var password = Console.ReadLine();
-                current = LoginValidation(allUsers, username, password);
-                if(current != null && current.LockedUser == true)
-                {
-                    Console.WriteLine("The user is locked");
-                    continue;
-                }
-                if (current != null && current.IsAdmin == true)
-                {
-                    currentAdmin = current;
-                    ok = true;
-                }
-                else if (current != null && current.LogInAttempt != 0 && current.IsAdmin == false)
-                {
-                    currentUser = current;
-                    ok = true;
-                }
-                else
-                {
-                    continue;
-                }
-            } while (ok == false);
-            if(current.IsAdmin == true)
-            {
-                menus.AdminMenu(currentAdmin);
-            }
-            else
-            {
-                menus.UserMenu(currentUser);
-            }
-        }
-
 
         /// <summary>
         /// Method to check if the user exists
@@ -69,38 +19,68 @@ namespace TeamLemon.Controls
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>Returns either the current user if it exists, else returns null</returns>
-        private static Person LoginValidation(Dictionary<int, Person> allUsers, string username, string password)
+        public static void LoginValidation(Dictionary<int, User> allUsers,Dictionary<int,Admin> allAdmins)
         {
+            var menus = new MenuClass();
+            bool ok = false;
             bool found = false;
-            var current = new Person();
-            foreach (var item in allUsers)
+            var currentUser = new User();
+            var currentAdmin = new Admin();
+            do
             {
-                if (item.Value.Name == username && item.Value.Password == password)
+                Console.WriteLine("Welcome the bank\n");
+                Console.Write("Username: ");
+                var username = Console.ReadLine();
+                Console.Write("\nPassword: ");
+                var password = Console.ReadLine();
+
+                foreach (var user in allUsers)
                 {
-                    found = true;
-                    current = item.Value;
-                    break;
+                    if (user.Value.Name == username && user.Value.Password == password)
+                    {
+                        found = true;
+                        currentUser = user.Value;
+                        ok = true;
+                        user.Value.LogInAttempt = 3;
+                        user.Value.LockedUser = false;
+                        break;
+                    }
+                    else if (user.Value.Name != username ^ user.Value.Password != password)
+                    {
+                        currentUser = user.Value;
+                        user.Value.LogInAttempt--;
+                    }
                 }
-                else if (item.Value.Name != username ^ item.Value.Password != password)
+                foreach (var admin in allAdmins)
                 {
-                    current = item.Value;
-                    item.Value.LogInAttempt--;
-                }             
-            }
-            if (found == true && current.LogInAttempt != 0 || found == true && current.IsAdmin == true)
+                    if (admin.Value.Name == username && admin.Value.Password == password)
+                    {
+                        found = true;
+                        currentAdmin = admin.Value;
+                        ok = true;
+                        break;
+                    }
+                }
+                if (currentUser.LogInAttempt <= 0 && currentAdmin.IsAdmin != true)
+                {
+                    currentUser.LockedUser = true;
+                    ok = false;
+                }
+                if (currentUser.LockedUser && currentAdmin.IsAdmin != true)
+                {
+                    Console.WriteLine("The user is locked");
+                    ok = false;
+                    continue;
+                }
+            } while (ok == false);
+            if (currentAdmin.IsAdmin == true)
             {
-                return current;
-            }
-            else if (current.LogInAttempt <= 0)
-            {
-                current.LockedUser = true;
-                return current;
+                menus.AdminMenu(currentAdmin);
             }
             else
             {
-                Console.WriteLine("The user dosn't exist");
-                return null;
-            }
+                menus.UserMenu(currentUser);
+            }           
         }
     }
 }
