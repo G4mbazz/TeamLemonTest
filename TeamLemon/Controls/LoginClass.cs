@@ -28,7 +28,7 @@ namespace TeamLemon.Controls
             var currentAdmin = new Admin();
             do
             {
-                Console.WriteLine("Welcome the bank\n");
+                Console.WriteLine("\nWelcome to Lemon Bank\n");
                 Console.Write("Username: ");
                 var username = Console.ReadLine();
                 Console.Write("\nPassword: ");
@@ -61,6 +61,10 @@ namespace TeamLemon.Controls
                         LogIn = true;
                         break;
                     }
+                    else if(admin.Value.Name != username ^ admin.Value.Password != password)
+                    {
+                        Console.WriteLine("Wrong username or password");
+                    }
                 }
                 if (currentUser.LogInAttempt <= 0 && currentAdmin.IsAdmin != true)
                 {
@@ -70,14 +74,18 @@ namespace TeamLemon.Controls
                     continue;
                 }
             } while (LogIn == false);
-            if (currentAdmin.IsAdmin == true)
+            if (UserFound == true)
             {
-                menus.AdminMenu(currentAdmin);
+                if (currentAdmin.IsAdmin == true)
+                {
+                    menus.AdminMenu(currentAdmin);
+                }
+                else
+                {
+                    menus.UserMenu(currentUser);
+                }
             }
-            else
-            {
-                menus.UserMenu(currentUser);
-            }           
+        
         }
     }
 }
