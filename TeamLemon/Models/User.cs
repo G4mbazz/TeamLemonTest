@@ -7,7 +7,7 @@ namespace TeamLemon.Models
     public class User : Person
     {
 
-        public static Dictionary<int, User> AllUsers()
+        public static List<User> AllUsers()
         {
 
             User Sebastian = new User()
@@ -47,11 +47,11 @@ namespace TeamLemon.Models
                 LogInAttempt = 3,
                 LockedUser = false
             };
-            Dictionary<int, User> AllPersons = new Dictionary<int, User>();
-            AllPersons.Add(Sebastian.ID, Sebastian);
-            AllPersons.Add(Patrik.ID, Patrik);
-            AllPersons.Add(Leo.ID, Leo);
-            AllPersons.Add(Theo.ID, Theo);
+            var AllPersons = new List<User>();
+            AllPersons.Add(Sebastian);
+            AllPersons.Add(Patrik);
+            AllPersons.Add(Leo);
+            AllPersons.Add(Theo);
 
             return AllPersons;
         }
