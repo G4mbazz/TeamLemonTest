@@ -19,7 +19,7 @@ namespace TeamLemon.Controls
         /// <param name="username"></param>
         /// <param name="password"></param>
         /// <returns>Returns either the current user if it exists, else returns null</returns>
-        public static void LoginValidation(Dictionary<int, User> allUsers,Dictionary<int,Admin> allAdmins)
+        public static void LoginValidation(List<User> allUsers,List<Admin> allAdmins)
         {
             var menus = new MenuClass();
             bool LogIn = false;
@@ -36,32 +36,32 @@ namespace TeamLemon.Controls
 
                 foreach (var user in allUsers)
                 {
-                    if (user.Value.Name == username && user.Value.Password == password && user.Value.LockedUser == false)
+                    if (user.Name == username && user.Password == password && user.LockedUser == false)
                     {
                         UserFound = true;
-                        currentUser = user.Value;
+                        currentUser = user;
                         LogIn = true;
-                        user.Value.LogInAttempt = 3;
-                        user.Value.LockedUser = false;
+                        user.LogInAttempt = 3;
+                        user.LockedUser = false;
                         break;
                     }
-                    else if (user.Value.Name != username ^ user.Value.Password != password)
+                    else if (user.Name != username ^ user.Password != password)
                     {
-                        currentUser = user.Value;
-                        user.Value.LogInAttempt--;
+                        currentUser = user;
+                        user.LogInAttempt--;
                         Console.WriteLine("Wrong username or password");
                     }
                 }
                 foreach (var admin in allAdmins)
                 {
-                    if (admin.Value.Name == username && admin.Value.Password == password)
+                    if (admin.Name == username && admin.Password == password)
                     {
                         UserFound = true;
-                        currentAdmin = admin.Value;
+                        currentAdmin = admin;
                         LogIn = true;
                         break;
                     }
-                    else if(admin.Value.Name != username ^ admin.Value.Password != password)
+                    else if(admin.Name != username ^ admin.Password != password)
                     {
                         Console.WriteLine("Wrong username or password");
                     }
