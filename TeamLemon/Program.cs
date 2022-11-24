@@ -7,10 +7,10 @@ namespace TeamLemon
     {
         static void Main(string[] args)
         {
-            var userDict = User.AllUsers();
-            var adminDict = Admin.AllAdmins();
+            var userList = User.AllUsers();
+            var adminList = Admin.AllAdmins();
 
-            LoginClass.LoginValidation(userDict,adminDict);
+            LoginClass.LoginValidation(userList,adminList);
 
             
         }
