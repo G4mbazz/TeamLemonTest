@@ -17,8 +17,12 @@ namespace TeamLemon.Models
                 IsAdmin = false,
                 ID = 1001,
                 LogInAttempt = 3,
-                LockedUser = false
-                
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1432.34m},
+                    new Account{AccountName = "Salery: ", Balance = 10000.00m}
+                }
             };
             User Patrik = new User()
             {
@@ -27,7 +31,8 @@ namespace TeamLemon.Models
                 IsAdmin = false,
                 ID = 1002,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
             };
             User Leo = new User()
             {
@@ -36,7 +41,8 @@ namespace TeamLemon.Models
                 IsAdmin = false,
                 ID = 1003,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
             };
             User Theo = new User()
             {
@@ -45,7 +51,8 @@ namespace TeamLemon.Models
                 IsAdmin = false,
                 ID = 1004,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
             };
             var AllPersons = new List<User>();
             AllPersons.Add(Sebastian);
