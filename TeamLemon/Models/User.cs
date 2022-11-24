@@ -6,10 +6,8 @@ namespace TeamLemon.Models
 {
     public class User : Person
     {
-
         public static List<User> AllUsers()
         {
-
             User Sebastian = new User()
             {
                 Name = "Sebastian",
@@ -71,6 +69,11 @@ namespace TeamLemon.Models
             AllPersons.Add(Patrik);
             AllPersons.Add(Leo);
             AllPersons.Add(Theo);
+
+            foreach (User user in AllPersons)
+            {
+                Account.AllAccounts.Add(user.ID, user.Accounts);
+            }
 
             return AllPersons;
         }
