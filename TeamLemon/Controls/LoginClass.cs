@@ -36,7 +36,7 @@ namespace TeamLemon.Controls
 
                 foreach (var user in allUsers)
                 {
-                    if (user.Value.Name == username && user.Value.Password == password)
+                    if (user.Value.Name == username && user.Value.Password == password && user.Value.LockedUser == false)
                     {
                         found = true;
                         currentUser = user.Value;
@@ -49,6 +49,7 @@ namespace TeamLemon.Controls
                     {
                         currentUser = user.Value;
                         user.Value.LogInAttempt--;
+                        Console.WriteLine("Wrong username or password");
                     }
                 }
                 foreach (var admin in allAdmins)
