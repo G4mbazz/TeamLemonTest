@@ -22,13 +22,13 @@ namespace TeamLemon.Controls
         public static void LoginValidation(Dictionary<int, User> allUsers,Dictionary<int,Admin> allAdmins)
         {
             var menus = new MenuClass();
-            bool ok = false;
-            bool found = false;
+            bool LogIn = false;
+            bool UserFound = false;
             var currentUser = new User();
             var currentAdmin = new Admin();
             do
             {
-                Console.WriteLine("Welcome the bank\n");
+                Console.WriteLine("\nWelcome to Lemon Bank\n");
                 Console.Write("Username: ");
                 var username = Console.ReadLine();
                 Console.Write("\nPassword: ");
@@ -38,9 +38,9 @@ namespace TeamLemon.Controls
                 {
                     if (user.Value.Name == username && user.Value.Password == password && user.Value.LockedUser == false)
                     {
-                        found = true;
+                        UserFound = true;
                         currentUser = user.Value;
-                        ok = true;
+                        LogIn = true;
                         user.Value.LogInAttempt = 3;
                         user.Value.LockedUser = false;
                         break;
@@ -56,32 +56,36 @@ namespace TeamLemon.Controls
                 {
                     if (admin.Value.Name == username && admin.Value.Password == password)
                     {
-                        found = true;
+                        UserFound = true;
                         currentAdmin = admin.Value;
-                        ok = true;
+                        LogIn = true;
                         break;
+                    }
+                    else if(admin.Value.Name != username ^ admin.Value.Password != password)
+                    {
+                        Console.WriteLine("Wrong username or password");
                     }
                 }
                 if (currentUser.LogInAttempt <= 0 && currentAdmin.IsAdmin != true)
                 {
-                    currentUser.LockedUser = true;
-                    ok = false;
-                }
-                if (currentUser.LockedUser && currentAdmin.IsAdmin != true)
-                {
                     Console.WriteLine("The user is locked");
-                    ok = false;
+                    currentUser.LockedUser = true;
+                    LogIn = false;
                     continue;
                 }
-            } while (ok == false);
-            if (currentAdmin.IsAdmin == true)
+            } while (LogIn == false);
+            if (UserFound == true)
             {
-                menus.AdminMenu(currentAdmin);
+                if (currentAdmin.IsAdmin == true)
+                {
+                    menus.AdminMenu(currentAdmin);
+                }
+                else
+                {
+                    menus.UserMenu(currentUser);
+                }
             }
-            else
-            {
-                menus.UserMenu(currentUser);
-            }           
+        
         }
     }
 }
