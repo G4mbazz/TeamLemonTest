@@ -8,7 +8,7 @@ namespace TeamLemon.Models
     public class Admin : Person
     {
         
-        public static Dictionary<int, Admin> AllAdmins()
+        public static List<Admin> AllAdmins()
         {
             Admin anas = new Admin()
             {
@@ -19,8 +19,8 @@ namespace TeamLemon.Models
                 LockedUser = false
             };
 
-            Dictionary<int, Admin> allAdmins = new Dictionary<int, Admin>();
-            allAdmins.Add(anas.ID,anas);
+            var allAdmins = new List<Admin>();
+            allAdmins.Add(anas);
             return allAdmins;
         }
 
@@ -44,7 +44,7 @@ namespace TeamLemon.Models
                     // Loop through all users names to see if this username is unique
                     foreach (var user in allUsers)
                     {
-                        if (user.Value.Name == input)
+                        if (user.Name == input)
                         {
                             // If a matching name is found this username is not unique
                             isUnique = false;
@@ -72,7 +72,9 @@ namespace TeamLemon.Models
 
                 if (input != null)
                 {
+
                     _password = input;    
+
                 }
 
             } while (_password == null);
@@ -92,7 +94,7 @@ namespace TeamLemon.Models
             };
 
             // Append to AllUsers
-            User.AllUsers().Add(_id, newUser);
+            User.AllUsers().Add(newUser);
 
         }
     }
