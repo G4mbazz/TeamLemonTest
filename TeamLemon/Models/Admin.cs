@@ -16,7 +16,8 @@ namespace TeamLemon.Models
                 Password = "coolshirt",
                 ID = 1005,
                 IsAdmin = true,
-                LockedUser = false
+                LockedUser = false,
+                LogInAttempt = 3
             };
 
             var allAdmins = new List<Admin>();
@@ -29,14 +30,13 @@ namespace TeamLemon.Models
             var allUsers = User.AllUsers();
             string _username = null;
             string _password = null;
-
             int _id;
 
             // Get unique username
             do
             {
-                Console.WriteLine("Username : ");
-                string input = Console.ReadLine().ToLower();
+                Console.Write("Username : ");
+                string input = Console.ReadLine();
                 bool isUnique = true;
 
                 if (input != null)
@@ -44,7 +44,7 @@ namespace TeamLemon.Models
                     // Loop through all users names to see if this username is unique
                     foreach (var user in allUsers)
                     {
-                        if (user.Name == input)
+                        if (user.Name.ToLower() == input.ToLower())
                         {
                             // If a matching name is found this username is not unique
                             isUnique = false;
@@ -67,14 +67,12 @@ namespace TeamLemon.Models
             // Get the password
             do
             {
-                Console.WriteLine("Password : ");
+                Console.Write("Password : ");
                 string input = Console.ReadLine();
 
                 if (input != null)
                 {
-
                     _password = input;    
-
                 }
 
             } while (_password == null);
@@ -82,7 +80,7 @@ namespace TeamLemon.Models
             // Get id 
             _id = 1001 + User.AllUsers().Count;
 
-            // Create a person of user
+            // Create a new user
             User newUser = new User()
             {
                 Name = _username,
