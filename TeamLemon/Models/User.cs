@@ -33,6 +33,10 @@ namespace TeamLemon.Models
                 LogInAttempt = 3,
                 LockedUser = false,
                 Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1337.00m},
+                    new Account{AccountName = "Salery: ", Balance = 420.00m}
+                }
             };
             User Leo = new User()
             {
@@ -43,6 +47,10 @@ namespace TeamLemon.Models
                 LogInAttempt = 3,
                 LockedUser = false,
                 Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1664.00m},
+                    new Account{AccountName = "Salery: ", Balance = 18887.00m}
+                }
             };
             User Theo = new User()
             {
@@ -53,6 +61,10 @@ namespace TeamLemon.Models
                 LogInAttempt = 3,
                 LockedUser = false,
                 Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 740.00m},
+                    new Account{AccountName = "Salery: ", Balance = 6400.00m}
+                }
             };
             var AllPersons = new List<User>();
             AllPersons.Add(Sebastian);
