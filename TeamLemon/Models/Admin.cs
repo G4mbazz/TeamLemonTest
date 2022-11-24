@@ -64,36 +64,17 @@ namespace TeamLemon.Models
                 }
             } while (_username == null);
 
-            // Get unique password
+            // Get the password
             do
             {
                 Console.WriteLine("Password : ");
                 string input = Console.ReadLine();
-                bool isUnique = true;
 
                 if (input != null)
                 {
-                    // Loop through all users passwords to see if this password is unique
-                    foreach (var user in allUsers)
-                    {
-                        if (user.Value.Password == input)
-                        {
-                            // If a matching password is found this password is not unique
-                            isUnique = false;
-                        }
-                    }
-                    
-                    // If the password is unique then _password = the new password
-                    // If it is not unique then ask for another passsword
-                    if (!isUnique)
-                    {
-                        Console.WriteLine("Your password is not unique.");
-                    } 
-                    else
-                    {
-                        _password = input;
-                    }
+                    _password = input;    
                 }
+
             } while (_password == null);
 
             // Get id 
