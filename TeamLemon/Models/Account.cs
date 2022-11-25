@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace TeamLemon.Models
 {
@@ -13,7 +14,9 @@ namespace TeamLemon.Models
 
         public override string ToString()
         {
-            return AccountName + " " + Balance;
+            CultureInfo sek = new CultureInfo("sv-SE");
+            sek = (CultureInfo)sek.Clone();
+            return AccountName + " " + Balance.ToString("C",sek);
         }
 
     }

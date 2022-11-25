@@ -16,6 +16,14 @@ namespace TeamLemon.Controls
         public void UserMenu(User currentUser)
         {
             Console.WriteLine($"Welcome {currentUser.Name}");
+
+            Console.WriteLine("1. Check accounts");
+            int.TryParse(Console.ReadLine(), out int result);
+            if(result == 1)
+            {
+                User.MonitorAccounts(currentUser);
+                Console.ReadKey();
+            }
         }
     }
 }
