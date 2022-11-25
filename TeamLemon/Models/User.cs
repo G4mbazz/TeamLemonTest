@@ -6,9 +6,10 @@ namespace TeamLemon.Models
 {
     public class User : Person
     {
-        public static List<User> AllUsers()
+        public static List<User> AllUsers { get; set; } = new List<User>();
+        public static void initUsers()
         {
-            User Sebastian = new User()
+            User sebastian = new User()
             {
                 Name = "Sebastian",
                 Password = "LandFall",
@@ -22,7 +23,7 @@ namespace TeamLemon.Models
                     new Account{AccountName = "Salery: ", Balance = 10000.00m}
                 }
             };
-            User Patrik = new User()
+            User patrik = new User()
             {
                 Name = "Patrik",
                 Password = "Horror",
@@ -36,7 +37,7 @@ namespace TeamLemon.Models
                     new Account{AccountName = "Salery: ", Balance = 420.00m}
                 }
             };
-            User Leo = new User()
+            User leo = new User()
             {
                 Name = "Leo",
                 Password = "MTG",
@@ -50,7 +51,7 @@ namespace TeamLemon.Models
                     new Account{AccountName = "Salery: ", Balance = 18887.00m}
                 }
             };
-            User Theo = new User()
+            User theo = new User()
             {
                 Name = "Theo",
                 Password = "CarLover",
@@ -64,18 +65,10 @@ namespace TeamLemon.Models
                     new Account{AccountName = "Salery: ", Balance = 6400.00m}
                 }
             };
-            var AllPersons = new List<User>();
-            AllPersons.Add(Sebastian);
-            AllPersons.Add(Patrik);
-            AllPersons.Add(Leo);
-            AllPersons.Add(Theo);
-
-            foreach (User user in AllPersons)
-            {
-                Account.AllAccounts.Add(user.ID, user.Accounts);
-            }
-
-            return AllPersons;
+            AllUsers.Add(sebastian);
+            AllUsers.Add(patrik);
+            AllUsers.Add(leo);
+            AllUsers.Add(theo);
         }
     }
 }
