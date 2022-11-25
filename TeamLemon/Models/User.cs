@@ -6,54 +6,69 @@ namespace TeamLemon.Models
 {
     public class User : Person
     {
-
-        public static Dictionary<int, User> AllUsers()
+        public static List<User> AllUsers { get; set; } = new List<User>();
+        public static void initUsers()
         {
-
-            User Sebastian = new User()
+            User sebastian = new User()
             {
                 Name = "Sebastian",
                 Password = "LandFall",
                 IsAdmin = false,
                 ID = 1001,
                 LogInAttempt = 3,
-                LockedUser = false
-                
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1432.34m},
+                    new Account{AccountName = "Salery: ", Balance = 10000.00m}
+                }
             };
-            User Patrik = new User()
+            User patrik = new User()
             {
                 Name = "Patrik",
                 Password = "Horror",
                 IsAdmin = false,
                 ID = 1002,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1337.00m},
+                    new Account{AccountName = "Salery: ", Balance = 420.00m}
+                }
             };
-            User Leo = new User()
+            User leo = new User()
             {
                 Name = "Leo",
                 Password = "MTG",
                 IsAdmin = false,
                 ID = 1003,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 1664.00m},
+                    new Account{AccountName = "Salery: ", Balance = 18887.00m}
+                }
             };
-            User Theo = new User()
+            User theo = new User()
             {
                 Name = "Theo",
                 Password = "CarLover",
                 IsAdmin = false,
                 ID = 1004,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account{AccountName = "Savings: ", Balance = 740.00m},
+                    new Account{AccountName = "Salery: ", Balance = 6400.00m}
+                }
             };
-            Dictionary<int, User> AllPersons = new Dictionary<int, User>();
-            AllPersons.Add(Sebastian.ID, Sebastian);
-            AllPersons.Add(Patrik.ID, Patrik);
-            AllPersons.Add(Leo.ID, Leo);
-            AllPersons.Add(Theo.ID, Theo);
-
-            return AllPersons;
+            AllUsers.Add(sebastian);
+            AllUsers.Add(patrik);
+            AllUsers.Add(leo);
+            AllUsers.Add(theo);
         }
     }
 }

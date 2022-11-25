@@ -7,8 +7,10 @@ namespace TeamLemon.Models
 {
     public class Admin : Person
     {
+
+        public static List<Admin> AllAdmins { get; set; } = new List<Admin>();
         
-        public static Dictionary<int, Admin> AllAdmins()
+        public static void initAdmins()
         {
             Admin anas = new Admin()
             {
@@ -16,27 +18,23 @@ namespace TeamLemon.Models
                 Password = "coolshirt",
                 ID = 1005,
                 IsAdmin = true,
-                LockedUser = false
+                LockedUser = false,
+                LogInAttempt = 3
             };
-
-            Dictionary<int, Admin> allAdmins = new Dictionary<int, Admin>();
-            allAdmins.Add(anas.ID,anas);
-            return allAdmins;
+            AllAdmins.Add(anas);
         }
-
         public void CreateNewUser()
         {
-            var allUsers = User.AllUsers();
+            var allUsers = User.AllUsers;
             string _username = null;
             string _password = null;
-
             int _id;
 
             // Get unique username
             do
             {
-                Console.WriteLine("Username : ");
-                string input = Console.ReadLine().ToLower();
+                Console.Write("Username : ");
+                string input = Console.ReadLine();
                 bool isUnique = true;
 
                 if (input != null)
@@ -44,7 +42,7 @@ namespace TeamLemon.Models
                     // Loop through all users names to see if this username is unique
                     foreach (var user in allUsers)
                     {
-                        if (user.Value.Name == input)
+                        if (user.Name.ToLower() == input.ToLower())
                         {
                             // If a matching name is found this username is not unique
                             isUnique = false;
@@ -64,42 +62,23 @@ namespace TeamLemon.Models
                 }
             } while (_username == null);
 
-            // Get unique password
+            // Get the password
             do
             {
-                Console.WriteLine("Password : ");
+                Console.Write("Password : ");
                 string input = Console.ReadLine();
-                bool isUnique = true;
 
                 if (input != null)
                 {
-                    // Loop through all users passwords to see if this password is unique
-                    foreach (var user in allUsers)
-                    {
-                        if (user.Value.Password == input)
-                        {
-                            // If a matching password is found this password is not unique
-                            isUnique = false;
-                        }
-                    }
-                    
-                    // If the password is unique then _password = the new password
-                    // If it is not unique then ask for another passsword
-                    if (!isUnique)
-                    {
-                        Console.WriteLine("Your password is not unique.");
-                    } 
-                    else
-                    {
-                        _password = input;
-                    }
+                    _password = input;    
                 }
+
             } while (_password == null);
 
             // Get id 
-            _id = 1001 + User.AllUsers().Count;
+            _id = 1001 + User.AllUsers.Count;
 
-            // Create a person of user
+            // Create a new user
             User newUser = new User()
             {
                 Name = _username,
@@ -111,7 +90,7 @@ namespace TeamLemon.Models
             };
 
             // Append to AllUsers
-            User.AllUsers().Add(_id, newUser);
+            User.AllUsers.Add(newUser);
 
         }
     }

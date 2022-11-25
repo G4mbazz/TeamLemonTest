@@ -5,12 +5,13 @@ namespace TeamLemon
 {
     class Program
     {
+
         static void Main(string[] args)
         {
-            var userDict = User.AllUsers();
-            var adminDict = Admin.AllAdmins();
+            User.initUsers();
+            Admin.initAdmins();
 
-            LoginClass.LoginValidation(userDict,adminDict);
+            LoginClass.LoginValidation(User.AllUsers,Admin.AllAdmins);
 
             
         }
