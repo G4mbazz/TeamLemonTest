@@ -7,8 +7,10 @@ namespace TeamLemon.Models
 {
     public class Admin : Person
     {
+
+        public static List<Admin> AllAdmins { get; set; } = new List<Admin>();
         
-        public static List<Admin> AllAdmins()
+        public static void initAdmins()
         {
             Admin anas = new Admin()
             {
@@ -19,15 +21,11 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 LogInAttempt = 3
             };
-
-            var allAdmins = new List<Admin>();
-            allAdmins.Add(anas);
-            return allAdmins;
+            AllAdmins.Add(anas);
         }
-
         public void CreateNewUser()
         {
-            var allUsers = User.AllUsers();
+            var allUsers = User.AllUsers;
             string _username = null;
             string _password = null;
             int _id;
@@ -78,7 +76,7 @@ namespace TeamLemon.Models
             } while (_password == null);
 
             // Get id 
-            _id = 1001 + User.AllUsers().Count;
+            _id = 1001 + User.AllUsers.Count;
 
             // Create a new user
             User newUser = new User()
@@ -92,7 +90,7 @@ namespace TeamLemon.Models
             };
 
             // Append to AllUsers
-            User.AllUsers().Add(newUser);
+            User.AllUsers.Add(newUser);
 
         }
     }
