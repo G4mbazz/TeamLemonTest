@@ -86,8 +86,13 @@ namespace TeamLemon.Models
                 ID = _id,
                 IsAdmin = false,
                 LogInAttempt = 3,
-                LockedUser = false
+                LockedUser = false,
+                Accounts = new List<Account>()
+                {
+                    new Account(){AccountName = "Salary", Balance = 0}
+                }
             };
+
 
             // Append to AllUsers
             User.AllUsers.Add(newUser);
