@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using TeamLemon.Models;
 
 namespace TeamLemon.Controls
@@ -13,16 +11,44 @@ namespace TeamLemon.Controls
             Console.WriteLine("I AM ADMIN");
             admin.CreateNewUser();
         }
+
         public void UserMenu(User currentUser)
         {
-            Console.WriteLine($"Welcome {currentUser.Name}");
-
-            Console.WriteLine("1. Check accounts");
-            int.TryParse(Console.ReadLine(), out int result);
-            if(result == 1)
+            bool loop = true;
+            while (loop)
             {
-                User.MonitorAccounts(currentUser);
-                Console.ReadKey();
+                Console.Clear();
+
+                Console.WriteLine($"Welcome {currentUser.Name}");
+
+                Console.WriteLine("1. Check accounts");
+                int.TryParse(Console.ReadLine(), out int result);
+                switch (result)
+                {
+                    case 1:
+                        User.MonitorAccounts(currentUser);
+                        Console.ReadKey();
+                        break;
+                    case 2:
+                        AccountManagement.CreateNewAcc(currentUser);
+                        Console.ReadKey();
+                        break;
+                    case 3:
+                        LoginClass.LoginValidation(User.AllUsers, Admin.AllAdmins);
+                        Console.ReadKey();
+                        break;
+                    case 4:
+
+                        break;
+
+
+
+
+
+                    default:
+                        break;
+                }
+
             }
         }
     }
