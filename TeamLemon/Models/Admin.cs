@@ -33,7 +33,8 @@ namespace TeamLemon.Models
             // Get unique username
             do
             {
-                Console.Write("Username : ");
+                Console.WriteLine("Creating new user...");
+                Console.Write("Enter a new username : ");
                 string input = Console.ReadLine();
                 bool isUnique = true;
 
@@ -65,7 +66,7 @@ namespace TeamLemon.Models
             // Get the password
             do
             {
-                Console.Write("Password : ");
+                Console.Write("Enter a new password : ");
                 string input = Console.ReadLine();
 
                 if (input != null)
