@@ -44,31 +44,53 @@ namespace TeamLemon.Controls
             Console.WriteLine("Internal Transfer");
             MonitorAccounts(currentUser);
 
-            int fromAccount;
-            int toAccount;
-            decimal amountToTransfer;
+            int fromAccount = 0;
+            int toAccount = 0;
+            decimal amountToTransfer = 0;
+            bool loop = true;
 
-            while (true) { 
+            while (loop) 
+            {
                 Console.WriteLine("Choose account to transfer from.");
 
-                if (int.TryParse(Console.ReadLine(), out fromAccount) && fromAccount <= Account.AllAccounts[currentUser.ID].Count) { break; }
-            }
+                if (int.TryParse(Console.ReadLine(), out fromAccount) 
+                    && fromAccount <= Account.AllAccounts[currentUser.ID].Count) 
+                {
 
-            while (true)
+                    loop = false;
+                }
+            }
+            fromAccount--;
+            while (!loop)
             {
                 Console.WriteLine("Choose account to transfer to.");
-
-                if (int.TryParse(Console.ReadLine(), out toAccount) && toAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAccount) { break; }
+                int.TryParse(Console.ReadLine(), out toAccount);
+                toAccount--;
+                if (toAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAccount)
+                {
+                    loop = true;
+                }
             }
-
-            while (true)
+            while (loop)
             {
                 Console.WriteLine("How much do you want to transfer?");
 
                 decimal.TryParse(Console.ReadLine(), out amountToTransfer);
-                if (amountToTransfer < 4) { break; }
-
+                if (Account.AllAccounts[currentUser.ID][fromAccount].Balance < amountToTransfer)
+                {
+                    Console.WriteLine("The amount is to high or to low for what exists on the account");
+                }
+                else
+                {
+                    loop = false;
+                }
             }
+            if(amountToTransfer <= 0)
+            {
+                amountToTransfer = 0;
+            }
+            Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
+            Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
         }
     }
 }

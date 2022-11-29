@@ -38,7 +38,7 @@ namespace TeamLemon.Controls
                         Console.ReadKey();
                         break;
                     case 4:
-
+                        AccountManagement.InternalTransfer(currentUser);
                         break;
 
 
@@ -46,6 +46,7 @@ namespace TeamLemon.Controls
 
 
                     default:
+                        Environment.Exit(0);
                         break;
                 }
 
