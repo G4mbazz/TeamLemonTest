@@ -80,15 +80,16 @@ namespace TeamLemon.Controls
                 {
                     Console.WriteLine("The amount is to high or to low for what exists on the account");
                 }
+                else if (amountToTransfer <= -1)
+                {
+                    Console.WriteLine("Please enter a sum greater than 0");
+                }
                 else
                 {
                     loop = false;
                 }
             }
-            if(amountToTransfer <= 0)
-            {
-                amountToTransfer = 0;
-            }
+
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
         }
