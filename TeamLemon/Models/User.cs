@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Globalization;
 
 namespace TeamLemon.Models
 {
@@ -69,6 +70,10 @@ namespace TeamLemon.Models
             AllUsers.Add(patrik);
             AllUsers.Add(leo);
             AllUsers.Add(theo);
+            foreach (User user in AllUsers)
+            {
+                Account.AllAccounts.Add(user.ID, user.Accounts);
+            }
         }
     }
 }
