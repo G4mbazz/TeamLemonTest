@@ -75,16 +75,6 @@ namespace TeamLemon.Models
                 Account.AllAccounts.Add(user.ID, user.Accounts);
             }
         }
-
-        public static void MonitorAccounts(User currentUser)
-        {
-            Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> currentAccount);
-
-            foreach (Account account in currentAccount)
-            {
-                Console.WriteLine(account.ToString());
-            }
-        }
     }
 }
 

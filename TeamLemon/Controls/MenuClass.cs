@@ -26,7 +26,7 @@ namespace TeamLemon.Controls
                 switch (result)
                 {
                     case 1:
-                        User.MonitorAccounts(currentUser);
+                        AccountManagement.MonitorAccounts(currentUser);
                         Console.ReadKey();
                         break;
                     case 2:
