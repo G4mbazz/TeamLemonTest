@@ -66,12 +66,17 @@ namespace TeamLemon.Controls
                         Console.WriteLine("Wrong username or password");
                     }
                 }
-                if (currentUser.LogInAttempt <= 0 && currentAdmin.IsAdmin != true)
+                if (currentUser.LogInAttempt <= 0 && currentAdmin.IsAdmin != true && currentUser.Name != null
+                    && currentAdmin.Name != null)
                 {
                     Console.WriteLine("The user is locked");
                     currentUser.LockedUser = true;
                     LogIn = false;
                     continue;
+                }
+                else
+                {
+                    Console.WriteLine("Error, Wrong input or there is no user with that name");
                 }
             } while (LogIn == false);
             if (UserFound == true)
