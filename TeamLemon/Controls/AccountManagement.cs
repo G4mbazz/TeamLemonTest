@@ -99,7 +99,37 @@ namespace TeamLemon.Controls
 
         public static void ExternalTransfer(User currentUser)
         {
+            int fromAccount = 0;
+            int toAccount = 10;
+            decimal amountToTransfer = 0;
+            var foundAccount = new Account();
+            Console.Clear();
+            Console.WriteLine("External transfer");
 
+            var loop = true;
+
+            MonitorAccounts(currentUser);
+            while (loop)
+            {
+                Console.WriteLine("From what account do you wish to transfer from?");
+                int.TryParse(Console.ReadLine(),out fromAccount);
+                fromAccount--;
+                if (!ValidateFromAccount(currentUser,fromAccount,toAccount))
+                {
+                    continue;
+                }
+                Console.WriteLine("Enter the account number below you wish to transfer the money to");
+                var inputAccNumber = Console.ReadLine();
+                var ID = ValidateAccountNumber(inputAccNumber);
+                Console.WriteLine("Enter the amount to transfer to the account");
+                decimal.TryParse(Console.ReadLine(), out amountToTransfer);
+                MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
+
+                loop = false;
+
+            }
+
+            MenuClass.ContinueToMenu();
         }
 
 
@@ -127,6 +157,26 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Wrong account input, select between the accounts you have");
                 return false;
             }
+        }
+        private static int ValidateAccountNumber(string inputAccNumber)
+        {
+
+            var foundID = 0;
+            foreach (var item in Account.AllAccounts)
+            {
+                foreach (Account account in item.Value.Where(x => x.AccountID == inputAccNumber))
+                {
+                    foundID = item.Key;
+                }
+            }
+            return foundID;
+        }
+        private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
+            , int fromAccount, string inputAccNumber)
+        {
+            Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
+            Account.AllAccounts[toAccountKey].Where(x => x.AccountID == inputAccNumber).ToList()
+                .ForEach(y => y.Balance += amount);
         }
     }
 }
