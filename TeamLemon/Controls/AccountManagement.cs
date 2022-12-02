@@ -52,11 +52,9 @@ namespace TeamLemon.Controls
             while (loop) 
             {
                 Console.WriteLine("Choose account to transfer from.");
-
-                if (int.TryParse(Console.ReadLine(), out fromAccount) 
-                    && fromAccount <= Account.AllAccounts[currentUser.ID].Count) 
+                int.TryParse(Console.ReadLine(),out fromAccount);
+                if (ValidateFromAccount(currentUser,fromAccount,toAccount)) 
                 {
-
                     loop = false;
                 }
             }
@@ -66,7 +64,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Choose account to transfer to.");
                 int.TryParse(Console.ReadLine(), out toAccount);
                 toAccount--;
-                if (toAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAccount)
+                if (ValidateToAccount(currentUser,fromAccount,toAccount))
                 {
                     loop = true;
                 }
@@ -92,6 +90,38 @@ namespace TeamLemon.Controls
 
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
+        }
+
+        public static void ExternalTransfer(User currentUser)
+        {
+
+        }
+
+
+        // Methods for checking if the accounts exists. Will be reused in external transfer.
+        private static bool ValidateFromAccount(User currentUser, int fromAccount, int toAcccount)
+        {
+            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Wrong account input, select between the accounts you have");
+                return false;
+            }
+        }
+        private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
+        {
+            if(toAccount <= Account.AllAccounts[currentUser.ID].Count && toAccount != fromAccount)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Wrong account input, select between the accounts you have");
+                return false;
+            }
         }
     }
 }
