@@ -15,7 +15,12 @@ namespace TeamLemon.Controls
             Console.WriteLine("You are creating a new account");
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
-            Account tempAcc = new Account() {AccountName = accName, Balance = 0 };
+
+            // Generates a new unique ID for the specified account using Guid-struct.
+            var id = Guid.NewGuid().ToString();
+            var result = id.Substring(0,6);
+
+            Account tempAcc = new Account() {AccountName = accName, Balance = 0 , AccountID = result};
 
             foreach (var item in Account.AllAccounts)
             {
@@ -52,11 +57,9 @@ namespace TeamLemon.Controls
             while (loop) 
             {
                 Console.WriteLine("Choose account to transfer from.");
-
-                if (int.TryParse(Console.ReadLine(), out fromAccount) 
-                    && fromAccount <= Account.AllAccounts[currentUser.ID].Count) 
+                int.TryParse(Console.ReadLine(),out fromAccount);
+                if (ValidateFromAccount(currentUser,fromAccount,toAccount)) 
                 {
-
                     loop = false;
                 }
             }
@@ -66,7 +69,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Choose account to transfer to.");
                 int.TryParse(Console.ReadLine(), out toAccount);
                 toAccount--;
-                if (toAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAccount)
+                if (ValidateToAccount(currentUser,fromAccount,toAccount))
                 {
                     loop = true;
                 }
@@ -92,6 +95,38 @@ namespace TeamLemon.Controls
 
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
+        }
+
+        public static void ExternalTransfer(User currentUser)
+        {
+
+        }
+
+
+        // Methods for checking if the accounts exists. Will be reused in external transfer.
+        private static bool ValidateFromAccount(User currentUser, int fromAccount, int toAcccount)
+        {
+            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Wrong account input, select between the accounts you have");
+                return false;
+            }
+        }
+        private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
+        {
+            if(toAccount <= Account.AllAccounts[currentUser.ID].Count && toAccount != fromAccount)
+            {
+                return true;
+            }
+            else
+            {
+                Console.WriteLine("Wrong account input, select between the accounts you have");
+                return false;
+            }
         }
     }
 }

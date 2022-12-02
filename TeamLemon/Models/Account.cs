@@ -9,6 +9,7 @@ namespace TeamLemon.Models
     {
         public string AccountName { get; set; }
         public decimal Balance { get; set; }
+        public string AccountID { get; set; }
 
         public static Dictionary<int, List<Account>> AllAccounts { get; set; } = new Dictionary<int, List<Account>>();
 
