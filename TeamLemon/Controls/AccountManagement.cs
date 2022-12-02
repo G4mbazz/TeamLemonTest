@@ -15,7 +15,12 @@ namespace TeamLemon.Controls
             Console.WriteLine("You are creating a new account");
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
-            Account tempAcc = new Account() {AccountName = accName, Balance = 0 };
+
+            // Generates a new unique ID for the specified account using Guid-struct.
+            var id = Guid.NewGuid().ToString();
+            var result = id.Substring(0,6);
+
+            Account tempAcc = new Account() {AccountName = accName, Balance = 0 , AccountID = result};
 
             foreach (var item in Account.AllAccounts)
             {
