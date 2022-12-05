@@ -79,6 +79,11 @@ namespace TeamLemon.Models
             // Get id 
             _id = 1001 + User.AllUsers.Count;
 
+
+            // Generates account ID for the new users account using Guid-struct.
+            var accID = Guid.NewGuid().ToString();
+            var result = accID.Substring(0,6);
+
             // Create a new user
             User newUser = new User()
             {
@@ -90,7 +95,7 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account(){AccountName = "Salary", Balance = 0}
+                    new Account(){AccountName = "Salary", Balance = 0, AccountID = result}
                 }
             };
 

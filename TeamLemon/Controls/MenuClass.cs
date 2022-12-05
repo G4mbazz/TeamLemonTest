@@ -40,7 +40,7 @@ namespace TeamLemon.Controls
                         break;
                     case 3:
                         //External transfer
-                        ContinueToMenu();
+                        AccountManagement.ExternalTransfer(currentUser);
                         break;
                     case 4:
                         //Take a Loan
