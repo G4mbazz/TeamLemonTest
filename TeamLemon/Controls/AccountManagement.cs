@@ -112,20 +112,30 @@ namespace TeamLemon.Controls
             while (isTransfering)
             {
                 Console.WriteLine("From what account do you wish to transfer from?");
-                int.TryParse(Console.ReadLine(),out fromAccount);
-                fromAccount--;
-                if (!ValidateFromAccount(currentUser,fromAccount,toAccount))
+                if( int.TryParse(Console.ReadLine(), out fromAccount) && fromAccount !> Account.AllAccounts[currentUser.ID].Count)
                 {
-                    continue;
+                    fromAccount--;
+                    if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
+                    {
+                        continue;
+                    }
                 }
+
                 Console.WriteLine("Enter the account number below you wish to transfer the money to");
                 var inputAccNumber = Console.ReadLine();
                 var ID = ValidateAccountNumber(inputAccNumber);
                 Console.WriteLine("Enter the amount to transfer to the account");
-                decimal.TryParse(Console.ReadLine(), out amountToTransfer);
-                MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
+                if (decimal.TryParse(Console.ReadLine(), out amountToTransfer) && amountToTransfer >= 0 
+                    && amountToTransfer !> Account.AllAccounts[currentUser.ID][fromAccount].Balance)
+                {
+                    MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
 
-                isTransfering = false;
+                    isTransfering = false;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid amount to transfer");
+                }
 
             }
 
