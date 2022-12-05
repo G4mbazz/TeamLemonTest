@@ -187,7 +187,7 @@ namespace TeamLemon.Controls
         /// <returns>if the account exists returns true</returns>
         private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
         {
-            if (toAccount <= Account.AllAccounts[currentUser.ID].Count && toAccount != fromAccount)
+            if(toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
             {
                 return true;
             }
