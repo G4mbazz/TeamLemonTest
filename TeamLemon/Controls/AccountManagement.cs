@@ -52,29 +52,29 @@ namespace TeamLemon.Controls
             int fromAccount = 0;
             int toAccount = 0;
             decimal amountToTransfer = 0;
-            bool loop = true;
+            bool IsTransfer = true;
 
-            while (loop) 
+            while (IsTransfer) 
             {
                 Console.WriteLine("Choose account to transfer from.");
                 int.TryParse(Console.ReadLine(),out fromAccount);
                 if (ValidateFromAccount(currentUser,fromAccount,toAccount)) 
                 {
-                    loop = false;
+                    IsTransfer = false;
                 }
             }
             fromAccount--;
-            while (!loop)
+            while (!IsTransfer)
             {
                 Console.WriteLine("Choose account to transfer to.");
                 int.TryParse(Console.ReadLine(), out toAccount);
                 toAccount--;
                 if (ValidateToAccount(currentUser,fromAccount,toAccount))
                 {
-                    loop = true;
+                    IsTransfer = true;
                 }
             }
-            while (loop)
+            while (IsTransfer)
             {
                 Console.WriteLine("How much do you want to transfer?");
 
@@ -89,7 +89,7 @@ namespace TeamLemon.Controls
                 }
                 else
                 {
-                    loop = false;
+                    IsTransfer = false;
                 }
             }
 
@@ -106,10 +106,10 @@ namespace TeamLemon.Controls
             Console.Clear();
             Console.WriteLine("External transfer");
 
-            var loop = true;
+            var isTransfering = true;
 
             MonitorAccounts(currentUser);
-            while (loop)
+            while (isTransfering)
             {
                 Console.WriteLine("From what account do you wish to transfer from?");
                 int.TryParse(Console.ReadLine(),out fromAccount);
@@ -125,7 +125,7 @@ namespace TeamLemon.Controls
                 decimal.TryParse(Console.ReadLine(), out amountToTransfer);
                 MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
 
-                loop = false;
+                isTransfering = false;
 
             }
 
