@@ -8,7 +8,7 @@ namespace TeamLemon.Controls
 {
     public class AccountManagement
     {
-      
+
         public static void CreateNewAcc(User currentUser)
         {
             Console.Clear();
@@ -18,9 +18,9 @@ namespace TeamLemon.Controls
 
             // Generates a new unique ID for the specified account using Guid-struct.
             var id = Guid.NewGuid().ToString();
-            var result = id.Substring(0,6);
+            var result = id.Substring(0, 6);
 
-            Account tempAcc = new Account() {AccountName = accName, Balance = 0 , AccountID = result};
+            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result };
 
             foreach (var item in Account.AllAccounts)
             {
@@ -54,11 +54,11 @@ namespace TeamLemon.Controls
             decimal amountToTransfer = 0;
             bool IsTransfer = true;
 
-            while (IsTransfer) 
+            while (IsTransfer)
             {
                 Console.WriteLine("Choose account to transfer from.");
-                int.TryParse(Console.ReadLine(),out fromAccount);
-                if (ValidateFromAccount(currentUser,fromAccount,toAccount)) 
+                int.TryParse(Console.ReadLine(), out fromAccount);
+                if (ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     IsTransfer = false;
                 }
@@ -69,7 +69,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Choose account to transfer to.");
                 int.TryParse(Console.ReadLine(), out toAccount);
                 toAccount--;
-                if (ValidateToAccount(currentUser,fromAccount,toAccount))
+                if (ValidateToAccount(currentUser, fromAccount, toAccount))
                 {
                     IsTransfer = true;
                 }
@@ -103,15 +103,13 @@ namespace TeamLemon.Controls
             int toAccount = 10;
             decimal amountToTransfer = 0;
             var foundAccount = new Account();
-            Console.Clear();
-            Console.WriteLine("External transfer");
 
             var isTransfering = true;
-
-            MonitorAccounts(currentUser);
             while (isTransfering)
             {
-
+                Console.Clear();
+                MonitorAccounts(currentUser);
+                Console.WriteLine("External transfer");
                 Console.WriteLine("From what account do you wish to transfer from?");
                 int.TryParse(Console.ReadLine(), out fromAccount);
                 fromAccount--;
@@ -123,17 +121,34 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Enter the account number below you wish to transfer the money to");
                 var inputAccNumber = Console.ReadLine();
                 var ID = ValidateAccountNumber(inputAccNumber);
-                Console.WriteLine("Enter the amount to transfer to the account");
-                if (decimal.TryParse(Console.ReadLine(), out amountToTransfer) && amountToTransfer >= 0 
-                    && ValidateAmount(currentUser,amountToTransfer,fromAccount))
+                if (ID == 0)
                 {
+                    Console.WriteLine("There is no account with that number" +
+                        ", Press enter to try again");
+                    Console.ReadKey();
+                    continue;
+                }
+                Console.WriteLine("Enter the amount to transfer to the account");
+                if (decimal.TryParse(Console.ReadLine(), out amountToTransfer) && amountToTransfer >= 0
+                    && ValidateAmount(currentUser, amountToTransfer, fromAccount))
+                {
+                    Console.Write("\nPassword:");
+                    var password = Console.ReadLine();
+                    if (!ValidatePassword(currentUser, password))
+                    {
+                        Console.WriteLine("Wrong password, Press enter to try again");
+                        Console.ReadKey();
+                        continue;
+                    }
                     MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
 
                     isTransfering = false;
                 }
                 else
                 {
-                    Console.WriteLine("Invalid amount to transfer");
+                    Console.WriteLine("Invalid amount to transfer" +
+                        ", Press enter to continue");
+                    Console.ReadKey();
                 }
 
             }
@@ -142,7 +157,13 @@ namespace TeamLemon.Controls
         }
 
 
-        // Methods for checking if the accounts exists. Will be reused in external transfer.
+        /// <summary>
+        /// Checks if the account from exists.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="fromAccount"></param>
+        /// <param name="toAcccount"></param>
+        /// <returns>if the account exists returns true</returns>
         private static bool ValidateFromAccount(User currentUser, int fromAccount, int toAcccount)
         {
             if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount)
@@ -151,22 +172,38 @@ namespace TeamLemon.Controls
             }
             else
             {
-                Console.WriteLine("Wrong account input, select between the accounts you have");
+                Console.WriteLine("Wrong account input, select between the accounts you have" +
+                    ", Press enter to try again");
+                Console.ReadKey();
                 return false;
             }
         }
+        /// <summary>
+        /// Checks if the account to exists
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="fromAccount"></param>
+        /// <param name="toAccount"></param>
+        /// <returns>if the account exists returns true</returns>
         private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
         {
-            if(toAccount <= Account.AllAccounts[currentUser.ID].Count && toAccount != fromAccount)
+            if (toAccount <= Account.AllAccounts[currentUser.ID].Count && toAccount != fromAccount)
             {
                 return true;
             }
             else
             {
-                Console.WriteLine("Wrong account input, select between the accounts you have");
+                Console.WriteLine("Wrong account input, select between the accounts you have" +
+                    ", Press enter to try again");
+                Console.ReadKey();
                 return false;
             }
         }
+        /// <summary>
+        /// checks if the account with the specified account number exists
+        /// </summary>
+        /// <param name="inputAccNumber"></param>
+        /// <returns>If the account exists returns the accountnumber</returns>
         private static int ValidateAccountNumber(string inputAccNumber)
         {
 
@@ -180,14 +217,45 @@ namespace TeamLemon.Controls
             }
             return foundID;
         }
+        /// <summary>
+        /// Checks if there is enough money on the account which you want to transfer from.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="amountToTransfer"></param>
+        /// <param name="fromAccount"></param>
+        /// <returns>If the amount is valid returns true</returns>
         private static bool ValidateAmount(User currentUser, decimal amountToTransfer, int fromAccount)
         {
-            if(amountToTransfer > Account.AllAccounts[currentUser.ID][fromAccount].Balance)
+            if (amountToTransfer > Account.AllAccounts[currentUser.ID][fromAccount].Balance)
             {
+                Console.WriteLine("The amount is greater than what exists on the selected account" +
+                    ", Press enter to try again");
+                Console.ReadKey();
                 return false;
             }
             return true;
         }
+        /// <summary>
+        /// Validates the password before transfer to external account.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="password"></param>
+        /// <returns>Returns true if the password matches the current user</returns>
+        private static bool ValidatePassword(User currentUser, string password)
+        {
+            var result = currentUser.Password == password ? true : false;
+            return result;
+        }
+
+
+        /// <summary>
+        /// Makes the transfer after all checks have been passed
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="toAccountKey"></param>
+        /// <param name="amount"></param>
+        /// <param name="fromAccount"></param>
+        /// <param name="inputAccNumber"></param>
         private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
             , int fromAccount, string inputAccNumber)
         {
