@@ -125,7 +125,7 @@ namespace TeamLemon.Controls
                 var ID = ValidateAccountNumber(inputAccNumber);
                 Console.WriteLine("Enter the amount to transfer to the account");
                 if (decimal.TryParse(Console.ReadLine(), out amountToTransfer) && amountToTransfer >= 0 
-                    && amountToTransfer !> Account.AllAccounts[currentUser.ID][fromAccount].Balance)
+                    && ValidateAmount(currentUser,amountToTransfer,fromAccount))
                 {
                     MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
 
@@ -179,6 +179,14 @@ namespace TeamLemon.Controls
                 }
             }
             return foundID;
+        }
+        private static bool ValidateAmount(User currentUser, decimal amountToTransfer, int fromAccount)
+        {
+            if(amountToTransfer > Account.AllAccounts[currentUser.ID][fromAccount].Balance)
+            {
+                return false;
+            }
+            return true;
         }
         private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
             , int fromAccount, string inputAccNumber)
