@@ -111,14 +111,13 @@ namespace TeamLemon.Controls
             MonitorAccounts(currentUser);
             while (isTransfering)
             {
+
                 Console.WriteLine("From what account do you wish to transfer from?");
-                if( int.TryParse(Console.ReadLine(), out fromAccount) && fromAccount !> Account.AllAccounts[currentUser.ID].Count)
+                int.TryParse(Console.ReadLine(), out fromAccount);
+                fromAccount--;
+                if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
-                    fromAccount--;
-                    if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
-                    {
-                        continue;
-                    }
+                    continue;
                 }
 
                 Console.WriteLine("Enter the account number below you wish to transfer the money to");
