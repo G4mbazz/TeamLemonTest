@@ -55,10 +55,13 @@ namespace TeamLemon.Controls
                     Console.ReadKey();
                     continue;
                 }
+                amountToLoan = manager.CalculateInterest(amountToLoan);
                 manager.MakeLoanTransfer(currentUser,result,amountToLoan);
                 Console.Clear();
-                Console.WriteLine("The transfer was successful, You new account balance is now:");
+                Console.WriteLine($"The transfer was successful, You new account balance is now:");
                 AccountManagement.MonitorAccounts(currentUser);
+                Console.WriteLine($"Your current loan at 10% interest is at {amountToLoan}");
+
                 takingLoan = false;
             }
         }
@@ -117,6 +120,14 @@ namespace TeamLemon.Controls
                 Loan.AllLoans.Add(currentUser.ID, new Loan { User = currentUser, Amount = amountToLoan });
             }
             User.AllUsers[User.AllUsers.IndexOf(currentUser)].AmountLeftToLoan -= amountToLoan;
+        }
+        private decimal CalculateInterest(decimal amount)
+        {
+            decimal interest = 1.10m;
+
+            amount *= interest;
+
+            return amount;
         }
     }
 }
