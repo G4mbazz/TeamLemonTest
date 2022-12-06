@@ -17,6 +17,16 @@ namespace TeamLemon.Controls
             LoanMangement manager = new LoanMangement();
             var takingLoan = true;
             var amountToLoan = 0.0m;
+            Console.Clear();
+            Console.WriteLine("Take a loan");
+            Console.WriteLine("[1]Continue");
+            Console.WriteLine("[2]Return to menu");
+            int.TryParse(Console.ReadLine(), out int input);
+            if(input != 1)
+            {
+                MenuClass menu = new MenuClass();
+                menu.UserMenu(currentUser);
+            }
             while (takingLoan)
             {
                 Console.Clear();
@@ -35,7 +45,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Enter the amount you wish to loan" +
                     $"\nYour current loancelling is at: {manager.CalculateLoanCelling(currentUser)}");
                 decimal.TryParse(Console.ReadLine(), out amountToLoan);
-                if(!manager.ValidateLoanAmount(currentUser, amountToLoan))
+                if (!manager.ValidateLoanAmount(currentUser, amountToLoan))
                 {
                     continue;
                 }
