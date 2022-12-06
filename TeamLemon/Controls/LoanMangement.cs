@@ -75,6 +75,11 @@ namespace TeamLemon.Controls
                 takingLoan = false;
             }
         }
+        /// <summary>
+        /// Checks if the current user already have a loan in the bank.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <returns>The loan which is conected to the user in question</returns>
         private Loan UserLoanValidation(User currentUser)
         {
             var user = Loan.AllLoans.Values.FirstOrDefault(x => x.User == currentUser);
@@ -84,6 +89,11 @@ namespace TeamLemon.Controls
             }
             return null;
         }
+        /// <summary>
+        /// Calculates the loan celling for the user in question.
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <returns>Decimal of the current users loancelling</returns>
         public decimal CalculateLoanCelling(User currentUser)
         {
             Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> accounts);
@@ -100,6 +110,12 @@ namespace TeamLemon.Controls
             loanCelling *= 5;
             return loanCelling;
         }
+        /// <summary>
+        /// Checks if the amount is valid to loan
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="amount"></param>
+        /// <returns>True if the current user does not precede the loan celling</returns>
         private bool ValidateLoanAmount(User currentUser, decimal amount)
         {
             if(currentUser.AmountLeftToLoan < amount)
@@ -118,6 +134,12 @@ namespace TeamLemon.Controls
             }
             return true;
         }
+        /// <summary>
+        /// Makes transfer from the bank to the current user
+        /// </summary>
+        /// <param name="currentUser"></param>
+        /// <param name="accountIndex"></param>
+        /// <param name="amountToLoan"></param>
         private void MakeLoanTransfer(User currentUser,int accountIndex ,decimal amountToLoan)
         {
             Account.AllAccounts[currentUser.ID][accountIndex].Balance += amountToLoan;
@@ -131,6 +153,11 @@ namespace TeamLemon.Controls
             }
             User.AllUsers[User.AllUsers.IndexOf(currentUser)].AmountLeftToLoan -= amountToLoan;
         }
+        /// <summary>
+        /// Adds interest to the amount the user wishes to loan
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <returns>Decimal of the new value when interest is added</returns>
         private decimal CalculateInterest(decimal amount)
         {
             decimal interest = 1.10m;
