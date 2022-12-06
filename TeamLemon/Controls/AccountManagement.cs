@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using TeamLemon.Models;
@@ -20,7 +21,27 @@ namespace TeamLemon.Controls
             var id = Guid.NewGuid().ToString();
             var result = id.Substring(0, 6);
 
-            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result };
+            // Choose culture info aka currency
+            Console.WriteLine("What currency would you like to use on this account?");
+            Console.WriteLine("1. SEK");
+            Console.WriteLine("2. USD");
+
+            CultureInfo sek = new CultureInfo("sv-SE");
+            CultureInfo usd = new CultureInfo("en-US");
+            CultureInfo culture = sek;
+
+            do
+            {
+                if (int.TryParse(Console.ReadLine(), out int userChoice) && userChoice > 0 && userChoice < 3)
+                {
+                    if (userChoice == 1) { culture = sek; }
+                    if (userChoice == 2) { culture = usd; }
+                    break;
+                }
+            }
+            while (true);
+
+            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture};
 
             foreach (var item in Account.AllAccounts)
             {
@@ -94,6 +115,18 @@ namespace TeamLemon.Controls
             }
 
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
+
+            // Enchange rate on "en-US" aka American Dollar
+            if (Account.AllAccounts[currentUser.ID][toAccount].Culture.Name == "en-US")
+            {
+                amountToTransfer = amountToTransfer * Admin.usdValue;
+            }
+
+            if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US")
+            {
+                amountToTransfer = amountToTransfer / Admin.usdValue;
+            }
+
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
         }
 
@@ -260,6 +293,18 @@ namespace TeamLemon.Controls
             , int fromAccount, string inputAccNumber)
         {
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
+
+            // Enchange rate on "en-US" aka American Dollar
+            if (Account.AllAccounts[toAccountKey][inputAccNumber.IndexOf(inputAccNumber)].Culture.Name == "en-US")
+            {
+                amount = amount * Admin.usdValue;
+            }
+
+            if (Account.AllAccounts[toAccountKey][inputAccNumber.IndexOf(inputAccNumber)].Culture.Name == "sv-SE")
+            {
+                amount = amount / Admin.usdValue;
+            }
+
             Account.AllAccounts[toAccountKey].Where(x => x.AccountID == inputAccNumber).ToList()
                 .ForEach(y => y.Balance += amount);
         }

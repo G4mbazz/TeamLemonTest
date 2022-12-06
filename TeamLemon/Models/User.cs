@@ -20,8 +20,8 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account{AccountName = "Savings: ", Balance = 1432.34m, AccountID = "100101"},
-                    new Account{AccountName = "Salery: ", Balance = 10000.00m, AccountID = "100102"}
+                    new Account{AccountName = "Savings: ", Balance = 1432.34m, AccountID = "100101", Culture = new CultureInfo("sv-SE")},
+                    new Account{AccountName = "Salery: ", Balance = 10000.00m, AccountID = "100102", Culture = new CultureInfo("sv-SE")}
                 }
             };
             User patrik = new User()
@@ -34,8 +34,8 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account{AccountName = "Savings: ", Balance = 1337.00m, AccountID = "100201"},
-                    new Account{AccountName = "Salery: ", Balance = 420.00m, AccountID = "100202"}
+                    new Account{AccountName = "Savings: ", Balance = 1337.00m, AccountID = "100201", Culture = new CultureInfo("sv-SE")},
+                    new Account{AccountName = "Salery: ", Balance = 420.00m, AccountID = "100202", Culture = new CultureInfo("sv-SE")}
                 }
             };
             User leo = new User()
@@ -48,8 +48,8 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account{AccountName = "Savings: ", Balance = 1664.00m, AccountID = "100301"},
-                    new Account{AccountName = "Salery: ", Balance = 18887.00m, AccountID = "100302"}
+                    new Account{AccountName = "Savings: ", Balance = 1664.00m, AccountID = "100301", Culture = new CultureInfo("sv-SE")},
+                    new Account{AccountName = "Salery: ", Balance = 18887.00m, AccountID = "100302", Culture = new CultureInfo("sv-SE")}
                 }
             };
             User theo = new User()
@@ -62,8 +62,8 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account{AccountName = "Savings: ", Balance = 740.00m, AccountID = "100401"},
-                    new Account{AccountName = "Salery: ", Balance = 6400.00m, AccountID = "100402"}
+                    new Account{AccountName = "Savings: ", Balance = 740.00m, AccountID = "100401", Culture = new CultureInfo("sv-SE")},
+                    new Account{AccountName = "Salery: ", Balance = 6400.00m, AccountID = "100402", Culture = new CultureInfo("en-US")}
                 }
             };
             AllUsers.Add(sebastian);
