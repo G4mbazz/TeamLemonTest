@@ -69,7 +69,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("Choose account to transfer to.");
                 int.TryParse(Console.ReadLine(), out toAccount);
                 toAccount--;
-                if (ValidateToAccount(currentUser, fromAccount, toAccount))
+                if (ValidateToAccount(currentUser, toAccount, fromAccount))
                 {
                     IsTransfer = true;
                 }
@@ -185,7 +185,7 @@ namespace TeamLemon.Controls
         /// <param name="fromAccount"></param>
         /// <param name="toAccount"></param>
         /// <returns>if the account exists returns true</returns>
-        public static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
+        public static bool ValidateToAccount(User currentUser,int toAccount, int? fromAccount = null)
         {
             if(toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
             {
@@ -241,7 +241,7 @@ namespace TeamLemon.Controls
         /// <param name="currentUser"></param>
         /// <param name="password"></param>
         /// <returns>Returns true if the password matches the current user</returns>
-        private static bool ValidatePassword(User currentUser, string password)
+        public static bool ValidatePassword(User currentUser, string password)
         {
             var result = currentUser.Password == password ? true : false;
             return result;
