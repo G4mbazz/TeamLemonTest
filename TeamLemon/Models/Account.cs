@@ -11,14 +11,15 @@ namespace TeamLemon.Models
         public decimal Balance { get; set; }
         public string AccountID { get; set; }
 
+        public CultureInfo Culture { get; set; }
+
         public static Dictionary<int, List<Account>> AllAccounts { get; set; } = new Dictionary<int, List<Account>>();
 
         public override string ToString()
         {
             CultureInfo sek = new CultureInfo("sv-SE");
             sek = (CultureInfo)sek.Clone();
-            return AccountName + " " + Balance.ToString("C",sek);
+            return AccountName + " " + Balance.ToString("C",Culture);
         }
-
     }
 }
