@@ -37,7 +37,6 @@ namespace TeamLemon.Controls
         {
             Console.Write("\nPress enter to return to menu: ");
             Console.ReadKey();
-        
         }
         public void UserMenu(User currentUser)
         {
