@@ -65,12 +65,12 @@ namespace TeamLemon.Controls
                     Console.ReadKey();
                     continue;
                 }
-                amountToLoan = manager.CalculateInterest(amountToLoan);
+                var amountToLoanWithInterest = manager.CalculateInterest(amountToLoan);
                 manager.MakeLoanTransfer(currentUser,result,amountToLoan);
                 Console.Clear();
                 Console.WriteLine($"The transfer was successful, You new account balance is now:");
                 AccountManagement.MonitorAccounts(currentUser);
-                Console.WriteLine($"Your current loan at 10% interest is at {amountToLoan}");
+                Console.WriteLine($"Your current loan at 10% interest is at {amountToLoanWithInterest}");
 
                 takingLoan = false;
             }
