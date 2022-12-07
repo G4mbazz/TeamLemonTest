@@ -300,9 +300,8 @@ namespace TeamLemon.Controls
             {
                 amount = amount * Admin.usdValue;
             }
-
-            if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "sv-SE").AccountName == "sv-SE" &&
-               Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" )
+            else if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "sv-SE").AccountName == "sv-SE" &&
+                    Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" )
             {
                 amount = amount / Admin.usdValue;
             }
