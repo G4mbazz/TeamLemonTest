@@ -116,7 +116,8 @@ namespace TeamLemon.Models
                 Accounts = new List<Account>()
                 {
                     new Account(){AccountName = "Salary", Balance = 0, AccountID = result, Culture = culture}
-                }
+                },
+                SavingsAccounts = new List<Account>()
             };
 
 

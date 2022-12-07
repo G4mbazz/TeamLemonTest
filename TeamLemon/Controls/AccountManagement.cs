@@ -93,18 +93,21 @@ namespace TeamLemon.Controls
                 Console.WriteLine(i + ": " + account.ToString());
                 i++;
             }
-            Account.AllSavings.TryGetValue(currentUser.ID, out List<Account> currentAcc);
-            i = 0;
-            if (currentAcc != null)
+            List<Account> accounts = new List<Account>();
+            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
+
+            i = 1;
+            if (accounts.Count != 0)
             {
                 Console.WriteLine("Savings Account(s)");
-                foreach (Account account in currentAcc)
+                foreach (Account item in accounts)
                 {
-                    Console.WriteLine(i + ": " + account.ToString());
+                    Console.WriteLine(i + ": " + item.ToString());
                     i++;
                 }
 
             }
+
         }
 
         public static void InternalTransfer(User currentUser)
@@ -122,6 +125,7 @@ namespace TeamLemon.Controls
             {
                 Console.WriteLine("Choose account to transfer from.");
                 int.TryParse(Console.ReadLine(), out fromAccount);
+                
                 if (ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     IsTransfer = false;
@@ -188,12 +192,12 @@ namespace TeamLemon.Controls
                 Console.WriteLine("External transfer");
                 Console.WriteLine("From what account do you wish to transfer from?");
                 int.TryParse(Console.ReadLine(), out fromAccount);
-                fromAccount--;
+                
                 if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     continue;
                 }
-
+                fromAccount--;
                 Console.WriteLine("Enter the account number below you wish to transfer the money to");
                 var inputAccNumber = Console.ReadLine();
                 var ID = ValidateAccountNumber(inputAccNumber);
@@ -335,6 +339,7 @@ namespace TeamLemon.Controls
         private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
             , int fromAccount, string inputAccNumber)
         {
+            
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
 
             // Enchange rate on "en-US" aka American Dollar
