@@ -28,6 +28,7 @@ namespace TeamLemon.Controls
             var currentAdmin = new Admin();
             do
             {
+                Console.Clear();
                 Console.WriteLine("\nWelcome to Lemon Bank\n");
                 Console.Write("Username: ");
                 var username = Console.ReadLine();
