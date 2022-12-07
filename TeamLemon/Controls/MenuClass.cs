@@ -8,8 +8,30 @@ namespace TeamLemon.Controls
         public void AdminMenu(Admin admin)
         {
             // Add Admin methods to create users.
-            Console.WriteLine("I AM ADMIN");
-            admin.CreateNewUser();
+            bool IsAdminMenu = true;
+            while (IsAdminMenu)
+            {
+                Console.WriteLine($"Welcome admin {admin.Name}");
+                Console.WriteLine("1: Create new user\n2: Change exchange rate\n3: Logout");
+                if(int.TryParse(Console.ReadLine(), out int MenuChoice))
+                {
+                    switch (MenuChoice)
+                    {
+                        case 1:
+                            admin.CreateNewUser();
+                            ContinueToMenu();
+                            break;
+                        case 2:
+                            Admin.ExchangeRate();
+                            break;
+                        case 3:
+                            LoginClass.LoginValidation(User.AllUsers, Admin.AllAdmins);
+                            IsAdminMenu = false;
+                            break;
+                    }
+                }
+
+            }
         }
         public static void ContinueToMenu()
         {
