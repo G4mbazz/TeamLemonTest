@@ -295,14 +295,14 @@ namespace TeamLemon.Controls
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
 
             // Enchange rate on "en-US" aka American Dollar
-            if(Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "sv-SE" &&
-               Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "en-US").Culture.Name == "en-US")
+            if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "en-US").Culture.Name == "en-US" &&
+               Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "sv-SE")
             {
                 amount = amount * Admin.usdValue;
             }
 
-            if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" &&
-                Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "sv-SE").Culture.Name == "sv-SE")
+            if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "sv-SE").AccountName == "sv-SE" &&
+               Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" )
             {
                 amount = amount / Admin.usdValue;
             }
