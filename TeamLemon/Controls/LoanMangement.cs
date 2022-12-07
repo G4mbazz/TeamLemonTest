@@ -42,8 +42,9 @@ namespace TeamLemon.Controls
                     Console.WriteLine("You already have reached your loan celling");
                     takingLoan = false;
                 }
+                var resultRounded = Math.Round(manager.CalculateLoanCelling(currentUser),2,MidpointRounding.ToEven);
                 Console.WriteLine("Enter the amount you wish to loan" +
-                    $"\nYour current loancelling is at: {manager.CalculateLoanCelling(currentUser)}");
+                    $"\nYour current loancelling is at: {resultRounded}");
                 decimal.TryParse(Console.ReadLine(), out amountToLoan);
                 if (!manager.ValidateLoanAmount(currentUser, amountToLoan))
                 {
@@ -105,7 +106,14 @@ namespace TeamLemon.Controls
             }
             foreach (Account account in accounts)
             {
-                loanCelling += account.Balance;
+                if(account.Culture.Name == "en-US")
+                {
+                    loanCelling += account.Balance / Admin.usdValue;
+                }
+                else
+                {
+                    loanCelling += account.Balance;
+                }            
             }
             loanCelling *= 5;
             return loanCelling;
@@ -142,6 +150,11 @@ namespace TeamLemon.Controls
         /// <param name="amountToLoan"></param>
         private void MakeLoanTransfer(User currentUser,int accountIndex ,decimal amountToLoan)
         {
+            if(Account.AllAccounts[currentUser.ID][accountIndex].Culture.Name == "en-US")
+            {
+                amountToLoan *= Admin.usdValue;
+            }
+
             Account.AllAccounts[currentUser.ID][accountIndex].Balance += amountToLoan;
             if (Loan.AllLoans.ContainsKey(currentUser.ID))
             {
