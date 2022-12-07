@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Text;
 using TeamLemon.Models;
+using TeamLemon.Controls;
 
 namespace TeamLemon.Models
 {
@@ -118,11 +119,8 @@ namespace TeamLemon.Models
                     new Account(){AccountName = "Salary", Balance = 0, AccountID = result, Culture = culture}
                 }
             };
-
-
             // Append to AllUsers
             User.AllUsers.Add(newUser);
-
         }
     }
 }

@@ -45,6 +45,7 @@ namespace TeamLemon.Controls
                         break;
                     case 4:
                         //Take a Loan
+                        LoanMangement.TakeALoan(currentUser);
                         ContinueToMenu();
                         break;
                     case 5:
