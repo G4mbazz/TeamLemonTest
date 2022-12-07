@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Globalization;
+using TeamLemon.Controls;
 
 namespace TeamLemon.Models
 {
     public class User : Person
     {
         public static List<User> AllUsers { get; set; } = new List<User>();
+        public decimal AmountLeftToLoan { get; set; }
         public static void initUsers()
         {
             User sebastian = new User()
@@ -64,15 +66,22 @@ namespace TeamLemon.Models
                 {
                     new Account{AccountName = "Savings: ", Balance = 740.00m, AccountID = "100401"},
                     new Account{AccountName = "Salery: ", Balance = 6400.00m, AccountID = "100402"}
-                }
+                },
             };
             AllUsers.Add(sebastian);
             AllUsers.Add(patrik);
             AllUsers.Add(leo);
             AllUsers.Add(theo);
+            LoanMangement manager = new LoanMangement();
+            int i = 0;
             foreach (User user in AllUsers)
             {
                 Account.AllAccounts.Add(user.ID, user.Accounts);
+            }
+            foreach (User user in AllUsers)
+            {
+                AllUsers[i].AmountLeftToLoan = manager.CalculateLoanCelling(user);
+                i++;
             }
         }
     }
