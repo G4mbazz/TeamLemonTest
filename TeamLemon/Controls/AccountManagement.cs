@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using TeamLemon.Models;
 
 namespace TeamLemon.Controls
@@ -13,7 +12,20 @@ namespace TeamLemon.Controls
         public static void CreateNewAcc(User currentUser)
         {
             Console.Clear();
-            Console.WriteLine("You are creating a new account");
+            Console.WriteLine("You are creating a new account\nWhat type of account would you like to make?\n1: Normal account\n2: Savings account");
+            int accType;
+
+            do
+            {
+                Int32.TryParse(Console.ReadLine(), out accType);
+                if (accType <= 0 || accType > 2)
+                {
+                    Console.WriteLine("Invalid input, Please enter a number between 1-2!");
+                }
+
+            } while (accType > 2 || accType <= 0);
+
+
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
 
@@ -25,6 +37,7 @@ namespace TeamLemon.Controls
             Console.WriteLine("What currency would you like to use on this account?");
             Console.WriteLine("1. SEK");
             Console.WriteLine("2. USD");
+
 
             CultureInfo sek = new CultureInfo("sv-SE");
             CultureInfo usd = new CultureInfo("en-US");
@@ -41,14 +54,32 @@ namespace TeamLemon.Controls
             }
             while (true);
 
-            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
-
-            foreach (var item in Account.AllAccounts)
+            if (accType == 1)
             {
-                if (item.Key == currentUser.ID)
+
+                Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
+
+                foreach (var item in Account.AllAccounts)
                 {
-                    item.Value.Add(tempAcc);
-                    break;
+                    if (item.Key == currentUser.ID)
+                    {
+                        item.Value.Add(tempAcc);
+                        break;
+                    }
+                }
+            }
+
+            else if (accType == 2)
+            {
+                Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
+
+                foreach (var item in Account.AllSavings)
+                {
+                    if (item.Key == currentUser.ID)
+                    {
+                        item.Value.Add(tempAcc);
+                        break;
+                    }
                 }
             }
 
@@ -61,6 +92,18 @@ namespace TeamLemon.Controls
             {
                 Console.WriteLine(i + ": " + account.ToString());
                 i++;
+            }
+            Account.AllSavings.TryGetValue(currentUser.ID, out List<Account> currentAcc);
+            i = 0;
+            if (currentAcc != null)
+            {
+                Console.WriteLine("Savings Account(s)");
+                foreach (Account account in currentAcc)
+                {
+                    Console.WriteLine(i + ": " + account.ToString());
+                    i++;
+                }
+
             }
         }
 

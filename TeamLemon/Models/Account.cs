@@ -14,6 +14,7 @@ namespace TeamLemon.Models
         public CultureInfo Culture { get; set; }
 
         public static Dictionary<int, List<Account>> AllAccounts { get; set; } = new Dictionary<int, List<Account>>();
+        public static Dictionary<int, List<Account>> AllSavings { get; set; } = new Dictionary<int, List<Account>>();
 
         public override string ToString()
         {

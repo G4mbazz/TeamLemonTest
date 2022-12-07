@@ -74,7 +74,7 @@ namespace TeamLemon.Controls
                     LogIn = false;
                     continue;
                 }
-                else
+                else if (!LogIn)
                 {
                     Console.WriteLine("Error, Wrong input or there is no user with that name");
                 }
