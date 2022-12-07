@@ -41,7 +41,7 @@ namespace TeamLemon.Controls
             }
             while (true);
 
-            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture};
+            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
 
             foreach (var item in Account.AllAccounts)
             {
@@ -220,7 +220,7 @@ namespace TeamLemon.Controls
         /// <returns>if the account exists returns true</returns>
         private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
         {
-            if(toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
+            if (toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
             {
                 return true;
             }
@@ -295,16 +295,17 @@ namespace TeamLemon.Controls
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
 
             // Enchange rate on "en-US" aka American Dollar
-            if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "en-US").Culture.Name == "en-US" &&
-               Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "sv-SE")
+            if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "sv-SE" &&
+                Account.AllAccounts[toAccountKey].Where(x => x.AccountID == inputAccNumber).Any(x => x.Culture.Name == "en-US"))
             {
                 amount = amount * Admin.usdValue;
             }
-            else if(Account.AllAccounts[toAccountKey].Find(x => x.Culture.Name == "sv-SE").AccountName == "sv-SE" &&
-                    Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" )
+            if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US" &&
+                Account.AllAccounts[toAccountKey].Where(x => x.AccountID == inputAccNumber).Any(x => x.Culture.Name == "sv-SE"))
             {
                 amount = amount / Admin.usdValue;
             }
+
 
             Account.AllAccounts[toAccountKey].Where(x => x.AccountID == inputAccNumber).ToList()
                 .ForEach(y => y.Balance += amount);
