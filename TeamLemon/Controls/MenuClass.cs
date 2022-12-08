@@ -36,7 +36,7 @@ namespace TeamLemon.Controls
                         ContinueToMenu();
                         break;
                     case 2:
-                        AccountManagement.InternalTransfer(currentUser);
+                        AccountManagement.InternalChoice(currentUser);
                         ContinueToMenu();
                         break;
                     case 3:

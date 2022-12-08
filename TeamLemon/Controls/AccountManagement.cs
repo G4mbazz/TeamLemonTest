@@ -84,6 +84,102 @@ namespace TeamLemon.Controls
             }
 
         }
+        public static void InternalChoice(User currentUser)
+        {
+            Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
+            if(int.TryParse(Console.ReadLine(), out int choice))
+            {
+                switch (choice)
+                {
+                    case 1:
+                        AccountManagement.InternalTransfer(currentUser);
+                        break;
+                    case 2:
+                        AccountManagement.SavingsDeposit(currentUser);
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not a valid choice ");
+            }
+        }
+
+
+
+
+        public static void SavingsDeposit(User currentUser)
+        {
+            List<Account> accounts = new List<Account>();
+            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
+
+            if (accounts.Count != 0)
+            {
+                Console.Clear();
+                Console.WriteLine("Make deposit to your savings account");
+                MonitorAccounts(currentUser);
+
+                int fromAccount = 0;
+                int toAccount = 0;
+                decimal amountToTransfer = 0;
+                bool IsTransfer = true;
+                while (IsTransfer)
+                {
+                    Console.WriteLine("Choose account to transfer from");
+                    int.TryParse(Console.ReadLine(), out fromAccount);
+
+                    if (ValidateFromAccount(currentUser, fromAccount, toAccount))
+                    {
+                        IsTransfer = false;
+                    }
+                }
+                fromAccount--;
+                while (!IsTransfer)
+                {
+                    Console.WriteLine("Choose account to deposit your savings to");
+                    int.TryParse(Console.ReadLine(), out toAccount);
+                    toAccount--;
+                    if (ValidateToAccount(currentUser, toAccount, fromAccount))
+                    {
+                        IsTransfer = true;
+                    }
+                }
+                while (IsTransfer)
+                {
+                    Console.Write("Choose amount to deposit: ");
+                    decimal.TryParse(Console.ReadLine(),out amountToTransfer);
+                    if(ValidateAmount(currentUser, amountToTransfer, fromAccount))
+                    {
+
+                        IsTransfer = false;
+                    }
+                }
+
+                Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
+
+                // Enchange rate on "en-US" aka American Dollar
+                if (Account.AllSavings[currentUser.ID][toAccount].Culture.Name == "en-US")
+                {
+                    amountToTransfer = amountToTransfer * Admin.usdValue;
+                }
+
+                if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US")
+                {
+                    amountToTransfer = amountToTransfer / Admin.usdValue;
+                }
+
+                Account.AllSavings[currentUser.ID][toAccount].Balance += amountToTransfer;
+
+
+            }
+            else
+            {
+                Console.WriteLine("You have no saving accounts ");
+            }
+
+
+        }
+
         public static void MonitorAccounts(User currentUser)
         {
             Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> currentAccount);
@@ -268,6 +364,10 @@ namespace TeamLemon.Controls
         private static bool ValidateToAccount(User currentUser, int fromAccount, int toAccount)
         {
             if (toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
+            {
+                return true;
+            }
+            else if(toAccount <= Account.AllSavings[currentUser.ID].Count - 1 && toAccount != fromAccount)
             {
                 return true;
             }
