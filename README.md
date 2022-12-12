@@ -24,5 +24,25 @@ $ TeamLemon.exe
 ```
 
 # Classes
+[Login](#login)
+[Menu](#menu)
+[Account Managment](#account-managment)
+[Loan Managment](#loan-managment)
+[Account](#account)
+[Admin](#admin)
+[Loan](#loan)
+[Person](#person)
+[User](#user)
 
 
+
+## Login
+This is our login class that handles the basic login functions with username and password validation.
+The admin also goes through the same login class and at the end we check if the user is an admin or normal user.
+
+## Menu
+This is the menu class. Here the user or admin gets to choose where to go next in the program depending on their role.
+The user have many choices to pick and the admin have the basic functions of creating a new user and changing exchange rates.
+
+## Account Managment
+![alt text](https://ibb.co/PZJwwb5)
