@@ -24,15 +24,15 @@ $ TeamLemon.exe
 ```
 
 # Classes
-[Login](#login)
-[Menu](#menu)
-[Account Managment](#account-managment)
-[Loan Managment](#loan-managment)
-[Account](#account)
-[Admin](#admin)
-[Loan](#loan)
-[Person](#person)
-[User](#user)
+* [Login](#login)
+* [Menu](#menu)
+* [Account Managment](#account-managment)
+* [Loan Managment](#loan-managment)
+* [Account](#account)
+* [Admin](#admin)
+* [Loan](#loan)
+* [Person](#person)
+* [User](#user)
 
 
 
