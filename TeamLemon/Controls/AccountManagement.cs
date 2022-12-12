@@ -19,6 +19,18 @@ namespace TeamLemon.Controls
                 go.UserMenu(currentUser);
             }
             Console.WriteLine("You are creating a new account");
+            Console.WriteLine("You are creating a new account\nWhat type of account would you like to make?\n1: Normal account\n2: Savings account");
+            int accType;
+
+            do
+            {
+                Int32.TryParse(Console.ReadLine(), out accType);
+                if (accType <= 0 || accType > 2)
+                {
+                    Console.WriteLine("Invalid input, Please enter a number between 1-2!");
+                }
+
+            } while (accType > 2 || accType <= 0);
 
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
