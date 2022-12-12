@@ -27,6 +27,7 @@ namespace TeamLemon.Controls
             var currentAdmin = new Admin();
             do
             {
+                Console.Clear();
                 Console.WriteLine("\nWelcome to Lemon Bank\n");
                 Console.Write("Username: ");
                 var username = Console.ReadLine();
@@ -73,8 +74,12 @@ namespace TeamLemon.Controls
                     LogIn = false;
                     continue;
                 }
-                else
+                else if (!LogIn)
                 {
+                    if (currentAdmin.IsAdmin)
+                    {
+                        continue;
+                    }
                     Console.WriteLine("Error, Wrong input or there is no user with that name");
                 }
             } while (LogIn == false);
