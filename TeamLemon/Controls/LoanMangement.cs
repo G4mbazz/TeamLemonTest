@@ -18,14 +18,10 @@ namespace TeamLemon.Controls
             var takingLoan = true;
             var amountToLoan = 0.0m;
             Console.Clear();
-            Console.WriteLine("Take a loan");
-            Console.WriteLine("[1]Continue");
-            Console.WriteLine("[2]Return to menu");
-            int.TryParse(Console.ReadLine(), out int input);
-            if(input != 1)
+            if (MenuClass.GotoMenu("take a loan") != 1)
             {
-                MenuClass menu = new MenuClass();
-                menu.UserMenu(currentUser);
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
             }
             while (takingLoan)
             {

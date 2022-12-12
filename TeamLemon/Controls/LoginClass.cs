@@ -11,7 +11,6 @@ namespace TeamLemon.Controls
     /// </summary>
     class LoginClass
     {
-
         /// <summary>
         /// Method to check if the user exists
         /// </summary>

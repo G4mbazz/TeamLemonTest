@@ -13,6 +13,12 @@ namespace TeamLemon.Controls
         public static void CreateNewAcc(User currentUser)
         {
             Console.Clear();
+            Console.WriteLine("Welcome to creating a new account");
+            if (MenuClass.GotoMenu("to create a new account") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             Console.WriteLine("You are creating a new account");
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
@@ -67,6 +73,11 @@ namespace TeamLemon.Controls
         public static void InternalTransfer(User currentUser)
         {
             Console.Clear();
+            if (MenuClass.GotoMenu("to internal transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             Console.WriteLine("Internal Transfer");
             MonitorAccounts(currentUser);
 
@@ -132,6 +143,11 @@ namespace TeamLemon.Controls
 
         public static void ExternalTransfer(User currentUser)
         {
+            if (MenuClass.GotoMenu("to external transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             int fromAccount = 0;
             int toAccount = 10;
             decimal amountToTransfer = 0;
@@ -199,7 +215,8 @@ namespace TeamLemon.Controls
         /// <returns>if the account exists returns true</returns>
         private static bool ValidateFromAccount(User currentUser, int fromAccount, int toAcccount)
         {
-            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount)
+            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount &&
+                fromAccount != -1)
             {
                 return true;
             }
