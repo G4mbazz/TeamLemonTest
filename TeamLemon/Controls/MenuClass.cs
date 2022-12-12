@@ -47,7 +47,7 @@ namespace TeamLemon.Controls
 
                 Console.WriteLine($"Welcome {currentUser.Name}");
 
-                Console.WriteLine("1: Check accounts\n2: Internal transaction\n3: External Transaction\n4: Loan service\n5: Open new account\n6: Changelog\n7: Logout");
+                Console.WriteLine("1: Check accounts\n2: Internal transaction\n3: External Transaction\n4: Loan service\n5: Open new account\n6: Changelog\n7: Logout\n8: Exit Bank");
                 Console.Write("Select: ");
                 int.TryParse(Console.ReadLine(), out int result);
                 switch (result)
@@ -57,7 +57,7 @@ namespace TeamLemon.Controls
                         ContinueToMenu();
                         break;
                     case 2:
-                        AccountManagement.InternalTransfer(currentUser);
+                        AccountManagement.InternalChoice(currentUser);
                         ContinueToMenu();
                         break;
                     case 3:
@@ -81,7 +81,9 @@ namespace TeamLemon.Controls
                         LoginClass.LoginValidation(User.AllUsers, Admin.AllAdmins);
                         loop = false;
                         break;
-
+                    case 8:
+                        Environment.Exit(0);
+                        break;
                     default:
                         Console.WriteLine("Please enter a valid choise!");
                         ContinueToMenu();

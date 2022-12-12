@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Text;
 using TeamLemon.Models;
 
 namespace TeamLemon.Controls
@@ -13,7 +12,20 @@ namespace TeamLemon.Controls
         public static void CreateNewAcc(User currentUser)
         {
             Console.Clear();
-            Console.WriteLine("You are creating a new account");
+            Console.WriteLine("You are creating a new account\nWhat type of account would you like to make?\n1: Normal account\n2: Savings account");
+            int accType;
+
+            do
+            {
+                Int32.TryParse(Console.ReadLine(), out accType);
+                if (accType <= 0 || accType > 2)
+                {
+                    Console.WriteLine("Invalid input, Please enter a number between 1-2!");
+                }
+
+            } while (accType > 2 || accType <= 0);
+
+
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
 
@@ -25,6 +37,7 @@ namespace TeamLemon.Controls
             Console.WriteLine("What currency would you like to use on this account?");
             Console.WriteLine("1. SEK");
             Console.WriteLine("2. USD");
+
 
             CultureInfo sek = new CultureInfo("sv-SE");
             CultureInfo usd = new CultureInfo("en-US");
@@ -41,18 +54,132 @@ namespace TeamLemon.Controls
             }
             while (true);
 
-            Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
-
-            foreach (var item in Account.AllAccounts)
+            if (accType == 1)
             {
-                if (item.Key == currentUser.ID)
+
+                Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
+
+                foreach (var item in Account.AllAccounts)
                 {
-                    item.Value.Add(tempAcc);
-                    break;
+                    if (item.Key == currentUser.ID)
+                    {
+                        item.Value.Add(tempAcc);
+                        break;
+                    }
+                }
+            }
+
+            else if (accType == 2)
+            {
+                Account tempAcc = new Account() { AccountName = accName, Balance = 0, AccountID = result, Culture = culture };
+
+                foreach (var item in Account.AllSavings)
+                {
+                    if (item.Key == currentUser.ID)
+                    {
+                        item.Value.Add(tempAcc);
+                        break;
+                    }
                 }
             }
 
         }
+        public static void InternalChoice(User currentUser)
+        {
+            Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
+            if(int.TryParse(Console.ReadLine(), out int choice))
+            {
+                switch (choice)
+                {
+                    case 1:
+                        AccountManagement.InternalTransfer(currentUser);
+                        break;
+                    case 2:
+                        AccountManagement.SavingsDeposit(currentUser);
+                        break;
+                }
+            }
+            else
+            {
+                Console.WriteLine("Not a valid choice ");
+            }
+        }
+
+
+
+
+        public static void SavingsDeposit(User currentUser)
+        {
+            List<Account> accounts = new List<Account>();
+            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
+
+            if (accounts.Count != 0)
+            {
+                Console.Clear();
+                Console.WriteLine("Make deposit to your savings account");
+                MonitorAccounts(currentUser);
+
+                int fromAccount = 0;
+                int toAccount = 0;
+                decimal amountToTransfer = 0;
+                bool IsTransfer = true;
+                while (IsTransfer)
+                {
+                    Console.WriteLine("Choose account to transfer from");
+                    int.TryParse(Console.ReadLine(), out fromAccount);
+
+                    if (ValidateFromAccount(currentUser, fromAccount, toAccount))
+                    {
+                        IsTransfer = false;
+                    }
+                }
+                fromAccount--;
+                while (!IsTransfer)
+                {
+                    Console.WriteLine("Choose account to deposit your savings to");
+                    int.TryParse(Console.ReadLine(), out toAccount);
+                    toAccount--;
+                    if (ValidateToAccount(currentUser, toAccount, fromAccount))
+                    {
+                        IsTransfer = true;
+                    }
+                }
+                while (IsTransfer)
+                {
+                    Console.Write("Choose amount to deposit: ");
+                    decimal.TryParse(Console.ReadLine(),out amountToTransfer);
+                    if(ValidateAmount(currentUser, amountToTransfer, fromAccount))
+                    {
+
+                        IsTransfer = false;
+                    }
+                }
+
+                Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amountToTransfer;
+
+                // Enchange rate on "en-US" aka American Dollar
+                if (Account.AllSavings[currentUser.ID][toAccount].Culture.Name == "en-US")
+                {
+                    amountToTransfer = amountToTransfer * Admin.usdValue;
+                }
+
+                if (Account.AllAccounts[currentUser.ID][fromAccount].Culture.Name == "en-US")
+                {
+                    amountToTransfer = amountToTransfer / Admin.usdValue;
+                }
+
+                Account.AllSavings[currentUser.ID][toAccount].Balance += amountToTransfer;
+
+
+            }
+            else
+            {
+                Console.WriteLine("You have no saving accounts ");
+            }
+
+
+        }
+
         public static void MonitorAccounts(User currentUser)
         {
             Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> currentAccount);
@@ -62,6 +189,21 @@ namespace TeamLemon.Controls
                 Console.WriteLine(i + ": " + account.ToString());
                 i++;
             }
+            List<Account> accounts = new List<Account>();
+            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
+
+            i = 1;
+            if (accounts.Count != 0)
+            {
+                Console.WriteLine("Savings Account(s)");
+                foreach (Account item in accounts)
+                {
+                    Console.WriteLine(i + ": " + item.ToString());
+                    i++;
+                }
+
+            }
+
         }
 
         public static void InternalTransfer(User currentUser)
@@ -79,6 +221,7 @@ namespace TeamLemon.Controls
             {
                 Console.WriteLine("Choose account to transfer from.");
                 int.TryParse(Console.ReadLine(), out fromAccount);
+                
                 if (ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     IsTransfer = false;
@@ -145,12 +288,12 @@ namespace TeamLemon.Controls
                 Console.WriteLine("External transfer");
                 Console.WriteLine("From what account do you wish to transfer from?");
                 int.TryParse(Console.ReadLine(), out fromAccount);
-                fromAccount--;
+                
                 if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     continue;
                 }
-
+                fromAccount--;
                 Console.WriteLine("Enter the account number below you wish to transfer the money to");
                 var inputAccNumber = Console.ReadLine();
                 var ID = ValidateAccountNumber(inputAccNumber);
@@ -224,6 +367,10 @@ namespace TeamLemon.Controls
             {
                 return true;
             }
+            else if(toAccount <= Account.AllSavings[currentUser.ID].Count - 1 && toAccount != fromAccount)
+            {
+                return true;
+            }
             else
             {
                 Console.WriteLine("Wrong account input, select between the accounts you have" +
@@ -292,6 +439,7 @@ namespace TeamLemon.Controls
         private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
             , int fromAccount, string inputAccNumber)
         {
+            
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
 
             // Enchange rate on "en-US" aka American Dollar
