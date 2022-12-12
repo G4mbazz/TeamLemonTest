@@ -49,27 +49,37 @@ In our account managment class we have the methods to allow the user to do diffe
 monotoring their account balances:
 ```
   public static void MonitorAccounts(User currentUser)
+  
+```
+In this class we have built a structure with methods either handling basic functions the user want's to do but also the private methods that handles things like password-checks, error handling with amounts of currency transferable and also account index verification.
+
+## Loan Managment
+In this class we handle user loan commits. Here we mainly have only one method the user interacts with and the rest are checks and verification methods. We also calculate the users loan-celling in this class with the method:
+
+```
+public decimal CalculateLoanCelling(User currentUser)
         {
-            Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> currentAccount);
-            int i = 1;
-            foreach (Account account in currentAccount)
+            Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> accounts);
+            decimal loanCelling = 0;
+            Loan.AllLoans.TryGetValue(currentUser.ID, out Loan currentLoan);
+            if(currentLoan != null)
             {
-                Console.WriteLine(i + ": " + account.ToString());
-                i++;
+                return currentUser.AmountLeftToLoan;
             }
-            List<Account> accounts = new List<Account>();
-            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
-
-            i = 1;
-            if (accounts.Count != 0)
+            foreach (Account account in accounts)
             {
-                Console.WriteLine("Savings Account(s)");
-                foreach (Account item in accounts)
+                if(account.Culture.Name == "en-US")
                 {
-                    Console.WriteLine(i + ": " + item.ToString());
-                    i++;
+                    loanCelling += account.Balance / Admin.usdValue;
                 }
-
+                else
+                {
+                    loanCelling += account.Balance;
+                }            
             }
-            ```
+            loanCelling *= 5;
+            return loanCelling;
+        }
+        
+```
 
