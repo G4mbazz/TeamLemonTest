@@ -342,7 +342,8 @@ namespace TeamLemon.Controls
         /// <returns>if the account exists returns true</returns>
         private static bool ValidateFromAccount(User currentUser, int fromAccount, int toAcccount)
         {
-            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount)
+            if (fromAccount <= Account.AllAccounts[currentUser.ID].Count && fromAccount != toAcccount &&
+                fromAccount >= 0)
             {
                 return true;
             }
@@ -363,7 +364,8 @@ namespace TeamLemon.Controls
         /// <returns>if the account exists returns true</returns>
         public static bool ValidateToAccount(User currentUser,int toAccount, int? fromAccount = null)
         {
-            if (toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount)
+            if (toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount &&
+                toAccount >= 0)
             {
                 return true;
             }
