@@ -45,4 +45,31 @@ This is the menu class. Here the user or admin gets to choose where to go next i
 The user have many choices to pick and the admin have the basic functions of creating a new user and changing exchange rates.
 
 ## Account Managment
-![alt text](https://ibb.co/PZJwwb5)
+In our account managment class we have the methods to allow the user to do different things on their accounts such as
+monotoring their account balances:
+```
+  public static void MonitorAccounts(User currentUser)
+        {
+            Account.AllAccounts.TryGetValue(currentUser.ID, out List<Account> currentAccount);
+            int i = 1;
+            foreach (Account account in currentAccount)
+            {
+                Console.WriteLine(i + ": " + account.ToString());
+                i++;
+            }
+            List<Account> accounts = new List<Account>();
+            Account.AllSavings.TryGetValue(currentUser.ID, out accounts);
+
+            i = 1;
+            if (accounts.Count != 0)
+            {
+                Console.WriteLine("Savings Account(s)");
+                foreach (Account item in accounts)
+                {
+                    Console.WriteLine(i + ": " + item.ToString());
+                    i++;
+                }
+
+            }
+            ```
+
