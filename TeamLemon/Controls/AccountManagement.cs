@@ -12,19 +12,13 @@ namespace TeamLemon.Controls
         public static void CreateNewAcc(User currentUser)
         {
             Console.Clear();
-            Console.WriteLine("You are creating a new account\nWhat type of account would you like to make?\n1: Normal account\n2: Savings account");
-            int accType;
-
-            do
+            Console.WriteLine("Welcome to creating a new account");
+            if (MenuClass.GotoMenu("to create a new account") != 1)
             {
-                Int32.TryParse(Console.ReadLine(), out accType);
-                if (accType <= 0 || accType > 2)
-                {
-                    Console.WriteLine("Invalid input, Please enter a number between 1-2!");
-                }
-
-            } while (accType > 2 || accType <= 0);
-
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
+            Console.WriteLine("You are creating a new account");
 
             Console.Write("What would you like to name your account?: ");
             string accName = Console.ReadLine();
@@ -209,6 +203,11 @@ namespace TeamLemon.Controls
         public static void InternalTransfer(User currentUser)
         {
             Console.Clear();
+            if (MenuClass.GotoMenu("to internal transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             Console.WriteLine("Internal Transfer");
             MonitorAccounts(currentUser);
 
@@ -275,6 +274,11 @@ namespace TeamLemon.Controls
 
         public static void ExternalTransfer(User currentUser)
         {
+            if (MenuClass.GotoMenu("to external transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             int fromAccount = 0;
             int toAccount = 10;
             decimal amountToTransfer = 0;

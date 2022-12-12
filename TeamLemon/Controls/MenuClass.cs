@@ -92,5 +92,12 @@ namespace TeamLemon.Controls
 
             }
         }
+
+        public static int GotoMenu(string type)
+        {
+            Console.WriteLine($"[1]Continue to {type}\n[2]Return to menu");
+            int.TryParse(Console.ReadLine(), out int result);
+            return result;
+        }
     }
 }
