@@ -5,6 +5,7 @@ A simple bank app made with .NET Core 3.1
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Classes](#classes)
 
 ## General info
 This project is a simple bank app where the user can create new accounts, check current accounts,
@@ -22,5 +23,6 @@ $ cd ../debug
 $ TeamLemon.exe
 ```
 
-
+## Classes
+### Login-class
 
