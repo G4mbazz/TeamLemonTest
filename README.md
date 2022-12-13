@@ -4,6 +4,7 @@ A simple bank app made with .NET Core 3.1
 ## Table of Contents
 * [General info](#general-info)
 * [Technologies](#technologies)
+* [Flow of control](flow-of-control)
 * [Setup](#setup)
 * [Program Flow](#program-flow)
 * [Classes](#classes)
@@ -17,6 +18,18 @@ take a loan, open a savings account and transfer to other users in the bank.
 Project created with:
 .NET Core 3.1.
 C# 8.0.
+
+# Flow of control
+The app is built so users can handles currencies in different ways and admins can change exchange rates and create new users.
+We have choosen to use dictionaries and List<T> for our database and user records, a feature that could be improved with the use of a real database instead like SQL. Since we use dictionaries and lists we have made them as static properties so we can save changes in the bank even when we logout and change user as if we were to use objects it would only be temporary.
+
+In our app we have one big base class called "Person" that has all the attributes a person regardless of user or admin could inherit.
+We then have our 2 sub-classes which are "User" and "Admin" and those have specific properties and methods depending on their role.
+We try to use objects for new users, accounts, loans and collections to set each object to a specific instance and in this way making it easier to locate and handle each induvidual object.
+
+Most ways to identifie a specific user or account we use the users ID to set a key for each item we are looking for. This makes things like user-specific account and loans much easier since we now have a target instead of looking in the entire list every time.
+
+When we create new users we give them a unique account ID with the use of GUID [Globally Unique Identifier](https://sv.wikipedia.org/wiki/Globally_Unique_Identifier) that lets us give the user the possibility to create new accounts without having to worry about the same ID turning up twice.
 
 ## Setup
 
