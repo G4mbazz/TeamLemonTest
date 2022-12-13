@@ -92,6 +92,11 @@ namespace TeamLemon.Controls
         }
         public static void InternalChoice(User currentUser)
         {
+            if (MenuClass.GotoMenu("to internal transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
             Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
             if(int.TryParse(Console.ReadLine(), out int choice))
             {
@@ -215,11 +220,6 @@ namespace TeamLemon.Controls
         public static void InternalTransfer(User currentUser)
         {
             Console.Clear();
-            if (MenuClass.GotoMenu("to internal transfer") != 1)
-            {
-                var go = new MenuClass();
-                go.UserMenu(currentUser);
-            }
             Console.WriteLine("Internal Transfer");
             MonitorAccounts(currentUser);
 
