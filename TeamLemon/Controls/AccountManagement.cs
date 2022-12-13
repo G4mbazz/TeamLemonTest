@@ -128,9 +128,9 @@ namespace TeamLemon.Controls
             }
 
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
-            ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to account "
-                + Account.AllAccounts[currentUser.ID][toAccount].AccountName
-                + "from account " + Account.AllAccounts[currentUser.ID][fromAccount].AccountName, currentUser.Changelog);
+            ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to account '"
+                + Account.AllAccounts[currentUser.ID][toAccount].AccountID
+                + "' from account '" + Account.AllAccounts[currentUser.ID][fromAccount].AccountID + "'", currentUser.Changelog);
         }
 
         public static void ExternalTransfer(User currentUser)
@@ -177,8 +177,8 @@ namespace TeamLemon.Controls
                         continue;
                     }
                     MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
-                    ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to accountnumber '" + inputAccNumber 
-                        + "' from account " + Account.AllAccounts[currentUser.ID][fromAccount].AccountName, currentUser.Changelog);
+                    ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to account '" + inputAccNumber 
+                        + "' from account '" + Account.AllAccounts[currentUser.ID][fromAccount].AccountID + "'", currentUser.Changelog);
                     isTransfering = false;
                 }
                 else

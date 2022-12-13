@@ -32,6 +32,7 @@ namespace TeamLemon.Controls
         public static void AppendToChangelog(string StringToAppend, List<string> Changelog)
         {
             Changelog.Add(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + " : " + StringToAppend);
+            Lines.Add(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + " : " + StringToAppend);
         }
 
         // Main admin changelog
