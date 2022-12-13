@@ -1,4 +1,4 @@
-# Team Lemon's Bank App!
+# Lemon Bank
 A simple bank app made with .NET Core 3.1
 
 ## Table of Contents
