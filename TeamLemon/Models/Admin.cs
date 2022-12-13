@@ -13,6 +13,21 @@ namespace TeamLemon.Models
         public static List<Admin> AllAdmins { get; set; } = new List<Admin>();
         public static decimal usdValue = 0.097m;
 
+        public static decimal ExchangeRate()
+        {
+            Console.WriteLine($"Select new exchange rate between USD and SEK\nCurrently it's {Admin.usdValue} $ per SEK\n");
+            Console.Write("New exchange rate: ");
+            if(decimal.TryParse(Console.ReadLine(), out decimal NewExchange))
+            {
+                Admin.usdValue = NewExchange;
+            }
+            else
+            {
+                Console.WriteLine("Not a valid choice of exchange rate");
+            }
+                return Admin.usdValue;
+        }
+
         public static void initAdmins()
         {
             Admin anas = new Admin()
@@ -117,7 +132,8 @@ namespace TeamLemon.Models
                 Accounts = new List<Account>()
                 {
                     new Account(){AccountName = "Salary", Balance = 0, AccountID = result, Culture = culture}
-                }
+                },
+                SavingsAccounts = new List<Account>()
             };
             // Append to AllUsers
             User.AllUsers.Add(newUser);

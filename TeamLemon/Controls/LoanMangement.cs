@@ -18,14 +18,10 @@ namespace TeamLemon.Controls
             var takingLoan = true;
             var amountToLoan = 0.0m;
             Console.Clear();
-            Console.WriteLine("Take a loan");
-            Console.WriteLine("[1]Continue");
-            Console.WriteLine("[2]Return to menu");
-            int.TryParse(Console.ReadLine(), out int input);
-            if(input != 1)
+            if (MenuClass.GotoMenu("take a loan") != 1)
             {
-                MenuClass menu = new MenuClass();
-                menu.UserMenu(currentUser);
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
             }
             while (takingLoan)
             {
@@ -42,8 +38,9 @@ namespace TeamLemon.Controls
                     Console.WriteLine("You already have reached your loan celling");
                     takingLoan = false;
                 }
+                var resultRounded = Math.Round(manager.CalculateLoanCelling(currentUser),2,MidpointRounding.ToEven);
                 Console.WriteLine("Enter the amount you wish to loan" +
-                    $"\nYour current loancelling is at: {manager.CalculateLoanCelling(currentUser)}");
+                    $"\nYour current loancelling is at: {resultRounded}");
                 decimal.TryParse(Console.ReadLine(), out amountToLoan);
                 if (!manager.ValidateLoanAmount(currentUser, amountToLoan))
                 {
@@ -65,12 +62,12 @@ namespace TeamLemon.Controls
                     Console.ReadKey();
                     continue;
                 }
-                amountToLoan = manager.CalculateInterest(amountToLoan);
+                var amountToLoanWithInterest = manager.CalculateInterest(amountToLoan);
                 manager.MakeLoanTransfer(currentUser,result,amountToLoan);
                 Console.Clear();
                 Console.WriteLine($"The transfer was successful, You new account balance is now:");
                 AccountManagement.MonitorAccounts(currentUser);
-                Console.WriteLine($"Your current loan at 10% interest is at {amountToLoan}");
+                Console.WriteLine($"Your current loan at 10% interest is at {amountToLoanWithInterest}");
 
                 takingLoan = false;
             }
@@ -105,7 +102,14 @@ namespace TeamLemon.Controls
             }
             foreach (Account account in accounts)
             {
-                loanCelling += account.Balance;
+                if(account.Culture.Name == "en-US")
+                {
+                    loanCelling += account.Balance / Admin.usdValue;
+                }
+                else
+                {
+                    loanCelling += account.Balance;
+                }            
             }
             loanCelling *= 5;
             return loanCelling;
@@ -142,6 +146,11 @@ namespace TeamLemon.Controls
         /// <param name="amountToLoan"></param>
         private void MakeLoanTransfer(User currentUser,int accountIndex ,decimal amountToLoan)
         {
+            if(Account.AllAccounts[currentUser.ID][accountIndex].Culture.Name == "en-US")
+            {
+                amountToLoan *= Admin.usdValue;
+            }
+
             Account.AllAccounts[currentUser.ID][accountIndex].Balance += amountToLoan;
             if (Loan.AllLoans.ContainsKey(currentUser.ID))
             {

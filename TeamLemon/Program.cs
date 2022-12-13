@@ -8,6 +8,9 @@ namespace TeamLemon
     {
         static void Main(string[] args)
         {
+
+            ASCIIArt.IntroArt();
+
             User.initUsers();
             Admin.initAdmins();
             ChangelogManagement.Init();
