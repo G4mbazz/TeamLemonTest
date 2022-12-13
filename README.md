@@ -5,6 +5,7 @@ A simple bank app made with .NET Core 3.1
 * [General info](#general-info)
 * [Technologies](#technologies)
 * [Setup](#setup)
+* [Flow Of Control](#flow-of-control)
 * [Classes](#classes)
 * [Kanban Board](#kanban-board)
 
@@ -23,6 +24,11 @@ C# 8.0.
 $ cd ../debug
 $ TeamLemon.exe
 ```
+
+# Flow Of Control
+The program is built so when we first start it up we are greated with a ASCII logo of our bank. Then the user is asked to login with their username and password:
+
+
 
 # Classes
 * [Login](#login)
