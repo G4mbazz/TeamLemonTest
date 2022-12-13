@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text;
 using TeamLemon.Models;
+using TeamLemon.Controls;
 
 namespace TeamLemon.Models
 {
@@ -9,7 +11,23 @@ namespace TeamLemon.Models
     {
 
         public static List<Admin> AllAdmins { get; set; } = new List<Admin>();
-        
+        public static decimal usdValue = 0.097m;
+
+        public static decimal ExchangeRate()
+        {
+            Console.WriteLine($"Select new exchange rate between USD and SEK\nCurrently it's {Admin.usdValue} $ per SEK\n");
+            Console.Write("New exchange rate: ");
+            if(decimal.TryParse(Console.ReadLine(), out decimal NewExchange))
+            {
+                Admin.usdValue = NewExchange;
+            }
+            else
+            {
+                Console.WriteLine("Not a valid choice of exchange rate");
+            }
+                return Admin.usdValue;
+        }
+
         public static void initAdmins()
         {
             Admin anas = new Admin()
@@ -84,6 +102,24 @@ namespace TeamLemon.Models
             var accID = Guid.NewGuid().ToString();
             var result = accID.Substring(0,6);
 
+            // Choose culture info aka currency
+            Console.WriteLine("What currency would you like to use on this account?");
+            Console.WriteLine("1. SEK");
+            Console.WriteLine("2. USD");
+
+            CultureInfo sek = new CultureInfo("sv-SE");
+            CultureInfo usd = new CultureInfo("en-US");
+            CultureInfo culture = sek;
+
+            do {
+                if (int.TryParse(Console.ReadLine(), out int userChoice) && userChoice > 0 && userChoice < 3) {
+                    if (userChoice == 1) { culture = sek; }
+                    if (userChoice == 2) { culture = usd; }
+                    break;
+                }                
+            }
+            while (true);
+
             // Create a new user
             User newUser = new User()
             {
@@ -95,14 +131,12 @@ namespace TeamLemon.Models
                 LockedUser = false,
                 Accounts = new List<Account>()
                 {
-                    new Account(){AccountName = "Salary", Balance = 0, AccountID = result}
-                }
+                    new Account(){AccountName = "Salary", Balance = 0, AccountID = result, Culture = culture}
+                },
+                SavingsAccounts = new List<Account>()
             };
-
-
             // Append to AllUsers
             User.AllUsers.Add(newUser);
-
         }
     }
 }
