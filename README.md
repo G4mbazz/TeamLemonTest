@@ -26,7 +26,7 @@ $ TeamLemon.exe
 ```
 
 # Flow Of Control
-The program is built so when we first start it up we are greated with a ASCII logo of our bank. Then the user is asked to login with their username and password:
+The program is built so when we first start it up we are greated with a ASCII logo of our bank. Then the user is asked to login with their username and password: ![Login](Images/Login_0)
 
 
 
