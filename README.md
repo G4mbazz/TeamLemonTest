@@ -29,7 +29,7 @@ We try to use objects for new users, accounts, loans and collections to set each
 
 Most ways to identifie a specific user or account we use the users ID to set a key for each item we are looking for. This makes things like user-specific account and loans much easier since we now have a target instead of looking in the entire list every time.
 
-When we create new users we give them a unique account ID with the use of GUID [Globally Unique Identifier](https://sv.wikipedia.org/wiki/Globally_Unique_Identifier) that lets us give the user the possibility to create new accounts without having to worry about the same ID turning up twice.
+When we create new users we give them a unique account ID with the use of GUID [Globally Unique Identifier](https://en.wikipedia.org/wiki/Universally_unique_identifier) that lets us give the user the possibility to create new accounts without having to worry about the same ID turning up twice.
 
 ## Setup
 
