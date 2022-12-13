@@ -97,3 +97,37 @@ Each account have the following properties:
         public static Dictionary<int, List<Account>> AllSavings { get; set; } = new Dictionary<int, List<Account>>();
         
 ```
+## Admin
+The admin class have some basic properties such as a List<T> of all admins and also an decimal variable which defines the exchange rate between SEK and USD. The Admin class also has the "CreateNewUser" method for creating new users of the bank.
+Here we can create new objects of type "User" and add them to the bank record. The admin class also contains a method that allows the admin to change the current exchange rate.
+
+## Loan
+The loan class is just a model class for when a user takes a loan. We then use this class to create an objact of it with the properties "Amount" and "User" to see how much the user loaned and also which user took the loan. Also in this class there is a static Dictionary of all current loans at the bank so we can keep track of them.
+
+## Person
+Person is our base model class for both user and admin. This class contains all the attributes a person regardless of their current role at the bank. The user class looks as following: 
+
+```
+    public class Person
+    {
+        private string _name;
+        private string _password;
+        private bool _admin;
+        private int _id;
+        private int _logInAttempt;
+        private bool _lockedUser;
+        private List<Account> _accounts;
+        private List<Account> _savingsAccounts;
+        public string Name { get => _name; set { _name = value; } }
+        public string Password { get => _password; set { _password = value; } }
+        public bool IsAdmin { get => _admin; set { _admin = value; } }
+        public int ID { get => _id; set { _id = value; } }
+        public int LogInAttempt { get => _logInAttempt; set { _logInAttempt = value; } }
+        public bool LockedUser { get => _lockedUser; set { _lockedUser = value; } }
+        public List<Account> Accounts { get => _accounts;set { _accounts = value; } }
+        public List<Account> SavingsAccounts { get => _savingsAccounts; set { _savingsAccounts = value; } }
+    }
+    
+```
+
+## User
