@@ -75,9 +75,11 @@ namespace TeamLemon.Controls
                         break;
                     case 6:
                         //Changelog
+                        ChangelogManagement.ReadCurrentLog(currentUser);
                         ContinueToMenu();
                         break;
                     case 7:
+                        System.Threading.Tasks.Task task = ChangelogManagement.WriteChangelogAsync();
                         LoginClass.LoginValidation(User.AllUsers, Admin.AllAdmins);
                         loop = false;
                         break;
