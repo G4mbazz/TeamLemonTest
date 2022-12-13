@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using TeamLemon.Models;
@@ -19,18 +20,24 @@ namespace TeamLemon.Controls
             // To add in the filename for easier readability
             string path = Path.Combine(@"../../../Changelogs/Admins\log-" + DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + ".txt");
             await File.WriteAllLinesAsync(path, Lines);
+
+            foreach (User user in User.AllUsers)
+            {
+                string userPath = Path.Combine(@"../../../Changelogs/" + user.ID + "/Changelog.txt");
+                await File.WriteAllLinesAsync(userPath, user.Changelog);
+            }
         }
 
         // Add to personal changelog
         public static void AppendToChangelog(string StringToAppend, List<string> Changelog)
         {
-            Changelog.Add(StringToAppend);
+            Changelog.Add(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + " : " + StringToAppend);
         }
 
         // Main admin changelog
         public static void AppendToChangelog(string StringToAppend)
         {
-            Lines.Add(StringToAppend);
+            Lines.Add(DateTime.Now.ToString("MM-dd-yyyy_HH-mm-ss") + " : " + StringToAppend);
         }
 
         // Create folder for new users
@@ -44,12 +51,17 @@ namespace TeamLemon.Controls
         }
 
         // Read the changelog for a specific user and write it to console
-        public static void ReadCurrentLog(int userID)
+        public static void ReadCurrentLog(User currentUser)
         {
-            string path = Path.Combine(@"../../../Changelogs/" + userID + "/Changelog.txt");
-            foreach(string line in File.ReadLines(path))
+            //string path = Path.Combine(@"../../../Changelogs/" + userID + "/Changelog.txt");
+            //foreach(string line in File.ReadLines(path))
+            //{
+            //    Console.WriteLine(line);
+            //}
+
+            foreach (var item in User.AllUsers[User.AllUsers.IndexOf(currentUser)].Changelog)
             {
-                Console.WriteLine(line);
+                Console.WriteLine(item);
             }
         }
 
