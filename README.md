@@ -137,4 +137,4 @@ Our user class mostly serves as a model class were User inherit the person class
 
 
 # Kanban Board
-![Board](https://trello.com/invite/b/Nt94vdm8/ATTIb781d433bf0768c1790c0f900bca1011C36FC94A/team-lemon)
+[Board](https://trello.com/invite/b/Nt94vdm8/ATTIb781d433bf0768c1790c0f900bca1011C36FC94A/team-lemon)
