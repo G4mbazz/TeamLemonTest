@@ -131,3 +131,4 @@ Person is our base model class for both user and admin. This class contains all 
 ```
 
 ## User
+Our user class mostly serves as a model class were User inherit the person class to get all the properties of a person for each user in the bank. The user itself contains a List<T> of all our users in the bank and also a properties for their induvidual loan limit so we can keep track of each persons current limit. Both in the user class and the admin class we have a initializer-method to create our base-users/admins for our program so we have some users and admins to test the app with.
