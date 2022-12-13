@@ -30,7 +30,7 @@ The program is built so when we first start it up we are greated with a ASCII lo
 ![Login](Images/Login_0.png)
 
 After this the user is sent to the menu where they can select many different options:
-![]
+![Menu](Images/Menu.png)
 
 
 
