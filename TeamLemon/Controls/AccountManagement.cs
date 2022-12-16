@@ -96,10 +96,19 @@ namespace TeamLemon.Controls
                 }
             }
 
+            ChangelogManagement.AppendToChangelog("Created a new account '" + accName + "' with id '" + result + "'", currentUser.Changelog);
+
         }
         public static void InternalChoice(User currentUser)
         {
             if (MenuClass.GotoMenu("to internal transfer") != 1)
+            {
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
+            }
+            Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
+            if(int.TryParse(Console.ReadLine(), out int choice))
+
             {
                 var go = new MenuClass();
                 go.UserMenu(currentUser);
@@ -237,7 +246,6 @@ namespace TeamLemon.Controls
         public static void InternalTransfer(User currentUser)
         {
             Console.Clear();
-
             Console.WriteLine("Internal Transfer");
             MonitorAccounts(currentUser);
 
@@ -300,6 +308,9 @@ namespace TeamLemon.Controls
             }
 
             Account.AllAccounts[currentUser.ID][toAccount].Balance += amountToTransfer;
+            ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to account '"
+                + Account.AllAccounts[currentUser.ID][toAccount].AccountID
+                + "' from account '" + Account.AllAccounts[currentUser.ID][fromAccount].AccountID + "'", currentUser.Changelog);
         }
 
         public static void ExternalTransfer(User currentUser)
@@ -351,7 +362,8 @@ namespace TeamLemon.Controls
                         continue;
                     }
                     MakeExternalTransfer(currentUser, ID, amountToTransfer, fromAccount, inputAccNumber);
-
+                    ChangelogManagement.AppendToChangelog("Transfered " + amountToTransfer + " to account '" + inputAccNumber 
+                        + "' from account '" + Account.AllAccounts[currentUser.ID][fromAccount].AccountID + "'", currentUser.Changelog);
                     isTransfering = false;
                 }
                 else
