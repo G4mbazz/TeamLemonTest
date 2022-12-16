@@ -160,7 +160,7 @@ Our user class mostly serves as a model class were User inherit the person class
 
 ## Changelog Managment
 The changelog displays the users interactions in the bank. We use methods async to write new text files that are saved in ID-specific folders for each user with changes and transactions the user makes on their accounts. We display the time and date the transactions are made with DateTime struct and append to each textfile when the user does something. An internal transaction for example is displayed as following: 
-
+![Changelog](Images/changelog.png)
 
 
 
