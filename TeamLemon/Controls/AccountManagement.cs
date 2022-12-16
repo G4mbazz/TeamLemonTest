@@ -18,7 +18,6 @@ namespace TeamLemon.Controls
                 var go = new MenuClass();
                 go.UserMenu(currentUser);
             }
-            Console.WriteLine("You are creating a new account");
             Console.WriteLine("You are creating a new account\nWhat type of account would you like to make?\n1: Normal account\n2: Savings account");
             int accType;
 
@@ -32,8 +31,14 @@ namespace TeamLemon.Controls
 
             } while (accType > 2 || accType <= 0);
 
+
             Console.Write("What would you like to name your account?: ");
-            string accName = Console.ReadLine();
+            string accName = "";
+            do
+            {
+                accName = Console.ReadLine();
+                if (String.IsNullOrEmpty(accName)) Console.WriteLine("Please enter a name!");
+            } while (String.IsNullOrEmpty(accName));
 
             // Generates a new unique ID for the specified account using Guid-struct.
             var id = Guid.NewGuid().ToString();
@@ -54,9 +59,11 @@ namespace TeamLemon.Controls
                 if (int.TryParse(Console.ReadLine(), out int userChoice) && userChoice > 0 && userChoice < 3)
                 {
                     if (userChoice == 1) { culture = sek; }
-                    if (userChoice == 2) { culture = usd; }
+                    else if (userChoice == 2) { culture = usd; }
+
                     break;
                 }
+                else Console.WriteLine("Please enter a number between 1-2!");
             }
             while (true);
 
@@ -101,20 +108,37 @@ namespace TeamLemon.Controls
             }
             Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
             if(int.TryParse(Console.ReadLine(), out int choice))
+
             {
-                switch (choice)
-                {
-                    case 1:
-                        AccountManagement.InternalTransfer(currentUser);
-                        break;
-                    case 2:
-                        AccountManagement.SavingsDeposit(currentUser);
-                        break;
-                }
+                var go = new MenuClass();
+                go.UserMenu(currentUser);
             }
-            else
+            bool loop = true;
+            while (loop)
             {
-                Console.WriteLine("Not a valid choice ");
+                Console.Clear();
+                Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit\n3: Return to menu");
+                if (int.TryParse(Console.ReadLine(), out int choice))
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            AccountManagement.InternalTransfer(currentUser);
+                            break;
+                        case 2:
+                            AccountManagement.SavingsDeposit(currentUser);
+                            break;
+                        case 3:
+                            loop = false;
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    Console.WriteLine("Not a valid choice ");
+                }
             }
         }
 
@@ -160,8 +184,8 @@ namespace TeamLemon.Controls
                 while (IsTransfer)
                 {
                     Console.Write("Choose amount to deposit: ");
-                    decimal.TryParse(Console.ReadLine(),out amountToTransfer);
-                    if(ValidateAmount(currentUser, amountToTransfer, fromAccount))
+                    decimal.TryParse(Console.ReadLine(), out amountToTransfer);
+                    if (ValidateAmount(currentUser, amountToTransfer, fromAccount))
                     {
 
                         IsTransfer = false;
@@ -234,7 +258,7 @@ namespace TeamLemon.Controls
             {
                 Console.WriteLine("Choose account to transfer from.");
                 int.TryParse(Console.ReadLine(), out fromAccount);
-                
+
                 if (ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     IsTransfer = false;
@@ -309,7 +333,7 @@ namespace TeamLemon.Controls
                 Console.WriteLine("External transfer");
                 Console.WriteLine("From what account do you wish to transfer from?");
                 int.TryParse(Console.ReadLine(), out fromAccount);
-                
+
                 if (!ValidateFromAccount(currentUser, fromAccount, toAccount))
                 {
                     continue;
@@ -384,14 +408,14 @@ namespace TeamLemon.Controls
         /// <param name="fromAccount"></param>
         /// <param name="toAccount"></param>
         /// <returns>if the account exists returns true</returns>
-        public static bool ValidateToAccount(User currentUser,int toAccount, int? fromAccount = null)
+        public static bool ValidateToAccount(User currentUser, int toAccount, int? fromAccount = null)
         {
             if (toAccount <= Account.AllAccounts[currentUser.ID].Count - 1 && toAccount != fromAccount &&
                 toAccount >= 0)
             {
                 return true;
             }
-            else if(toAccount <= Account.AllSavings[currentUser.ID].Count - 1 && toAccount != fromAccount)
+            else if (toAccount <= Account.AllSavings[currentUser.ID].Count - 1 && toAccount != fromAccount)
             {
                 return true;
             }
@@ -463,7 +487,7 @@ namespace TeamLemon.Controls
         private static void MakeExternalTransfer(User currentUser, int toAccountKey, decimal amount
             , int fromAccount, string inputAccNumber)
         {
-            
+
             Account.AllAccounts[currentUser.ID][fromAccount].Balance -= amount;
 
             // Enchange rate on "en-US" aka American Dollar
