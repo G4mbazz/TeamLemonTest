@@ -87,7 +87,7 @@ namespace TeamLemon.Controls
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter a valid choise!");
+                        Console.WriteLine("Please enter a valid choice!");
                         ContinueToMenu();
                         break;
                 }
