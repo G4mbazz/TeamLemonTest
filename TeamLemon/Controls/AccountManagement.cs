@@ -89,6 +89,8 @@ namespace TeamLemon.Controls
                 }
             }
 
+            ChangelogManagement.AppendToChangelog("Created a new account '" + accName + "' with id '" + result + "'", currentUser.Changelog);
+
         }
         public static void InternalChoice(User currentUser)
         {
