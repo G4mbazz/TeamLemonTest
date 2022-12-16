@@ -57,6 +57,7 @@ After this the user is sent to the menu where they can select many different opt
 * [Loan](#loan)
 * [Person](#person)
 * [User](#user)
+* [Changelog Managment](#changelog-managment)
 
 
 
@@ -156,6 +157,10 @@ Person is our base model class for both user and admin. This class contains all 
 
 ## User
 Our user class mostly serves as a model class were User inherit the person class to get all the properties of a person for each user in the bank. The user itself contains a List<T> of all our users in the bank and also a properties for their induvidual loan limit so we can keep track of each persons current limit. Both in the user class and the admin class we have a initializer-method to create our base-users/admins for our program so we have some users and admins to test the app with.
+
+## Changelog Managment
+The changelog displays the users interactions in the bank. We use methods async to write new text files that are saved in ID-specific folders for each user with changes and transactions the user makes on their accounts. We display the time and date the transactions are made with DateTime struct and append to each textfile when the user does something. An internal transaction for example is displayed as following: 
+
 
 
 
