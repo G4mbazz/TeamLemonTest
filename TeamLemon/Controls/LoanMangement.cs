@@ -161,6 +161,8 @@ namespace TeamLemon.Controls
                 Loan.AllLoans.Add(currentUser.ID, new Loan { User = currentUser, Amount = amountToLoan });
             }
             User.AllUsers[User.AllUsers.IndexOf(currentUser)].AmountLeftToLoan -= amountToLoan;
+            ChangelogManagement.AppendToChangelog("Took a loan of '" + amountToLoan + "' to account '" 
+                + Account.AllAccounts[currentUser.ID][accountIndex].AccountID + "'", currentUser.Changelog);
         }
         /// <summary>
         /// Adds interest to the amount the user wishes to loan

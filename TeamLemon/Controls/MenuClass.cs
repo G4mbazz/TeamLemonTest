@@ -5,6 +5,7 @@ namespace TeamLemon.Controls
 {
     class MenuClass
     {
+        private System.Threading.Tasks.Task task;
         public void AdminMenu(Admin admin)
         {
             // Add Admin methods to create users.
@@ -79,15 +80,16 @@ namespace TeamLemon.Controls
                         ContinueToMenu();
                         break;
                     case 7:
-                        System.Threading.Tasks.Task task = ChangelogManagement.WriteChangelogAsync();
+                        task = ChangelogManagement.WriteChangelogAsync();
                         LoginClass.LoginValidation(User.AllUsers, Admin.AllAdmins);
                         loop = false;
                         break;
                     case 8:
+                        task = ChangelogManagement.WriteChangelogAsync();
                         Environment.Exit(0);
                         break;
                     default:
-                        Console.WriteLine("Please enter a valid choise!");
+                        Console.WriteLine("Please enter a valid choice!");
                         ContinueToMenu();
                         break;
                 }
