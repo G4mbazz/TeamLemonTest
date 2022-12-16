@@ -106,13 +106,6 @@ namespace TeamLemon.Controls
                 var go = new MenuClass();
                 go.UserMenu(currentUser);
             }
-            Console.WriteLine("Make internal transfers or deposit to savings account\n1: Internal Transfers\n2: Savings Deposit");
-            if(int.TryParse(Console.ReadLine(), out int choice))
-
-            {
-                var go = new MenuClass();
-                go.UserMenu(currentUser);
-            }
             bool loop = true;
             while (loop)
             {
