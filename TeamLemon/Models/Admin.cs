@@ -135,6 +135,8 @@ namespace TeamLemon.Models
                 },
                 SavingsAccounts = new List<Account>()
             };
+            Account.AllAccounts.Add(newUser.ID, newUser.Accounts);
+            Account.AllSavings.Add(newUser.ID, newUser.SavingsAccounts);
             // Append to AllUsers
             User.AllUsers.Add(newUser);
         }
