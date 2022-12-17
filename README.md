@@ -38,15 +38,6 @@ $ cd ../debug
 $ TeamLemon.exe
 ```
 
-# Program Flow
-The program is built so when we first start it up we are greated with a ASCII logo of our bank. Then the user is asked to login with their username and password:
-![Login](Images/Login_0.png)
-
-After this the user is sent to the menu where they can select many different options:
-![Menu](Images/Menu.png)
-
-
-
 # Classes
 * [Login](#login)
 * [Menu](#menu)
