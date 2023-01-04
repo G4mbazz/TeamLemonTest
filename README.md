@@ -8,7 +8,7 @@ A simple bank app made with .NET Core 3.1
 * [Setup](#setup)
 * [Program Flow](#program-flow)
 * [Classes](#classes)
-* [Kanban Board](#kanban-board)
+* [Scrum Board](#scrum-board)
 
 ## General info
 This project is a simple bank app where the user can create new accounts, check current accounts,
@@ -155,5 +155,5 @@ The changelog displays the users interactions in the bank. We use methods async 
 
 
 
-# Kanban Board
+# Scrum Board
 [Board](https://trello.com/invite/b/Nt94vdm8/ATTIb781d433bf0768c1790c0f900bca1011C36FC94A/team-lemon)
