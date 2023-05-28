@@ -9,6 +9,7 @@ A simple bank app made with .NET Core 3.1
 * [Program Flow](#program-flow)
 * [Classes](#classes)
 * [Scrum Board](#scrum-board)
+* [Tests](#test)
 
 ## General info
 This project is a simple bank app where the user can create new accounts, check current accounts,
@@ -157,3 +158,9 @@ The changelog displays the users interactions in the bank. We use methods async 
 
 # Scrum Board
 [Board](https://trello.com/invite/b/Nt94vdm8/ATTIb781d433bf0768c1790c0f900bca1011C36FC94A/team-lemon)
+  
+# Tests
+  Created test for ValidateFromAccount, ValidateAmount and ValidateAccountNumber methods.
+  Test for ValidateFromAccount to see that it returns true if the user has the specified account, otherwise it should return false.
+  Test for ValidateAmount should return true if the specified amount to transfer is lower or equal to account balance, returns false if the amount is greater than balance.
+  Test for ValidateAccountNumber returns the ID of the user with provided account number, if return is 0 no user with provided account number exist.
